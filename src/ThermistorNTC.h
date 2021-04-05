@@ -1,28 +1,28 @@
 /*
-SteinhartHart.h - Library to used to derive a precise temperature of a thermistor, 
+ThermistorNTC.h - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
 v0.1.1
 
-Copyright © 2021 Francisco Rafael Reyes Carmona. 
-All rights reserved. 
+Copyright © 2021 Francisco Rafael Reyes Carmona.
+All rights reserved.
 
-rafael.reyes.carmona@gmail.com 
+rafael.reyes.carmona@gmail.com
 
 
-  This file is part of SteinhartHart. 
+  This file is part of ThermistorNTC.
 
-  SteinhartHart is free software: you can redistribute it and/or modify
+  ThermistorNTC is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
-  SteinhartHart is distributed in the hope that it will be useful,
+  ThermistorNTC is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with SteinhartHart.  If not, see <https://www.gnu.org/licenses/>.
+  along with ThermistorNTC.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
@@ -33,8 +33,8 @@ rafael.reyes.carmona@gmail.com
 #endif
 
 
-#ifndef SteinhartHart_h
-#define SteinhartHart_h
+#ifndef ThermistorNTC_h
+#define ThermistorNTC_h
 
 enum Thermistor_connection {
   VCC,
@@ -75,7 +75,7 @@ class Thermistor {
         Thermistor(int, long, long, double, double, double, float); // Constructor para 3 parametros (A,B,D.. C = 0).
         Thermistor(int, long, long, float, float); // Constructor para parametro BETA del termistor.
         Thermistor(const Thermistor&) = delete; // Constructor de copia.
-        
+
         void setADC(int);
         void setEMA(float);
 
@@ -88,7 +88,7 @@ class Thermistor {
         double fastTempFahrenheit(Thermistor_connection ConType = VCC);
 
         void calcBETA(float, long, float, long);
-        
+
         void setDEBUG(bool);
 };
 
