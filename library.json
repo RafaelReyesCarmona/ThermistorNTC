@@ -1,0 +1,27 @@
+{
+	"name": "SteinhartHart",
+	"version": "0.1.1",
+	"keywords": "thermsitor, temperature",
+	"description": "Library to used to derive a precise temperature of a thermistor, fastest Calc.",
+	"authors":
+	[
+		{
+		"name": "Rafael Reyes Carmona",
+		"email": "rafael.reyes.carmona@gmail.com",
+		"url": "https://github.com/RafaelReyesCarmona/"
+		"maintainer": true
+		}
+	],
+	"repository":
+	{
+		"type": "git",
+		"url": "https://github.com/RafaelReyesCarmona/SteinhartHart.git"
+	},
+	"frameworks": [
+	  "arduino"
+	],
+	"platforms": [
+	  "atmelavr",
+	  "teensy"
+	]
+}
