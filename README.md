@@ -21,7 +21,7 @@ the NTC thermistor resistance/temperature curve. It is a third order
 polynomial ecuation which provides very good curve fitting.
 
 <p align=center><img src="img/Steinhart-Hart_4.png" alt="Steinhart-Hart_4"
-width=80%></p>
+width=70%></p>
 
 In the standard Steinhart-Hart equation the C parameter is set to zero.
 However, some manufacturers use all 4 coefficients. So we can use standard Steinhart-Hart
@@ -84,7 +84,7 @@ More information:
 In this library, it is take the beta ecuation and calculate temperature of the thermistor from it.
 
 <p align=center><img src="img/FastCalc_howto.png" alt="1/T=(beta + T0 * ln(R/NTC)/(beta * T0)"
-width=40%></p>
+width=30%></p>
 
 So we can solve using this formula:
 
@@ -127,7 +127,7 @@ Testing with 100k thermistors and 22kohms. Testing **sensor0** Steinhart-Hart th
 Beta is measured in degrees Kelvin (K) and is computed based on this equation:
 
 <p align=center><img src="img/Beta.png" alt="b=ln(Rt1/Rt2) / ((1/T1)-(1/T2))"
-width=30%></p>
+width=27%></p>
 
 Where:
 * **Rt1** = Resistance at Temperature 1 (ohms)
