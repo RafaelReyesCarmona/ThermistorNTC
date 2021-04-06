@@ -21,7 +21,7 @@ the NTC thermistor resistance/temperature curve. It is a third order
 polynomial ecuation which provides very good curve fitting.
 
 <p align=center><img src="img/Steinhart-Hart_4.png" alt="Steinhart-Hart_4"
-width=100%></p>
+width=80%></p>
 
 In the standard Steinhart-Hart equation the C parameter is set to zero.
 However, some manufacturers use all 4 coefficients. So we can use standard Steinhart-Hart
@@ -41,7 +41,7 @@ These can usually be found in the data sheet.
 Other form of the equation is the use of B (beta) parameter
 
 <p align=center><img src="img/Steinhart-Hart_beta.png" alt="Steinhart-Hart_beta"
-width=40%></p>
+width=30%></p>
 
 where:
 * **T** is the temperature (in kelvins)
@@ -89,7 +89,7 @@ width=40%></p>
 So we can solve using this formula:
 
 <p align=center><img src="img/FastCalc.png" alt="T=(beta * T0) / (beta + T0 * ln(R/NTC))"
-width=40%></p>
+width=30%></p>
 
 where:
 * **T** is the temperature (in kelvins)
@@ -105,23 +105,20 @@ board used. Tested on LGT8F328P-SOPP, LGT8F328P-QF32 and Arduino pro mini boards
 If it is compared Fast Calc with Steinhart-Hart three orden equation,
 it is 35-44% faster, depends on microcontroller used. See example for test.
 
-<p align=center><img src="img/Test1.jpg" alt="Test1 picture"
-width=80%></p>
+<p align=center><img src="img/Test1.jpg" alt="Test1 picture"></p>
 
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** Fast Calc equation. LGT8F328P-SOPP board. (32 MHz 5v.)
 
-<p align=center><img src="img/Test2.jpg" alt="Test2 picture"
-width=80%></p>
+<p align=center><img src="img/Test2.jpg" alt="Test2 picture"></p>
 
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. LGT8F328P-QF32 board. (32 MHz 5v.)
 
-<p align=center><img src="img/Test3.jpg" alt="Test2 picture"
-width=80%></p>
+<p align=center><img src="img/Test3.jpg" alt="Test2 picture"></p>
 
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. Atmega328p board. (16 MHz 5v.)
 
 <p align=center><img src="img/screenshot_arduinoProMini16Mhz5v.png" alt="Test 3 with sensors"
-width=80%></p>
+width=70%></p>
 
 Testing with 100k thermistors and 22kohms. Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. Atmega328p board. (16 MHz 5v.)
 
