@@ -105,20 +105,24 @@ board used. Tested on LGT8F328P-SOPP, LGT8F328P-QF32 and Arduino pro mini boards
 If it is compared Fast Calc with Steinhart-Hart three orden equation,
 it is 35-44% faster, depends on microcontroller used. See example for test.
 
-<p align=center><img src="img/Test1.png" alt="Test1 picture"
+<p align=center><img src="img/Test1.jpg" alt="Test1 picture"
 width=80%></p>
+
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** Fast Calc equation. LGT8F328P-SOPP board. (32 MHz 5v.)
 
-<p align=center><img src="img/Test2.png" alt="Test2 picture"
+<p align=center><img src="img/Test2.jpg" alt="Test2 picture"
 width=80%></p>
+
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. LGT8F328P-QF32 board. (32 MHz 5v.)
 
-<p align=center><img src="img/Test3.png" alt="Test2 picture"
+<p align=center><img src="img/Test3.jpg" alt="Test2 picture"
 width=80%></p>
+
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. Atmega328p board. (16 MHz 5v.)
 
 <p align=center><img src="img/screenshot_arduinoProMini16Mhz5v.png" alt="Test 3 with sensors"
 width=80%></p>
+
 Testing with 100k thermistors and 22kohms. Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. Atmega328p board. (16 MHz 5v.)
 
 ## Calculation of beta ##
@@ -126,7 +130,7 @@ Testing with 100k thermistors and 22kohms. Testing **sensor0** Steinhart-Hart th
 Beta is measured in degrees Kelvin (K) and is computed based on this equation:
 
 <p align=center><img src="img/Beta.png" alt="b=ln(Rt1/Rt2) / ((1/T1)-(1/T2))"
-width=40%></p>
+width=30%></p>
 
 Where:
 * **Rt1** = Resistance at Temperature 1 (ohms)
@@ -136,7 +140,8 @@ Where:
 
 How to Calc beta of NTC Thermistor, you can [see this page.](https://www.ametherm.com/thermistor/ntc-thermistor-beta)
 
-[![Thermistor Calculator](img/Screenshot_20210307_012630.jpg)](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html)
+<p align=center><img src="img/Screenshot_20210307_012630.jpg" alt="Thermistor Calculator"
+width=60%>
 
 Using the [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html)
 you can de termine the unknowns parameters of a thermistor.
