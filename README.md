@@ -1,4 +1,4 @@
-<img src="img/celsius.png" width=48 height=48 align=right>
+<img src="img/thermometer.png" width=48 height=48 align=right>
 
 # ThermistorNTC library #
 
@@ -301,4 +301,4 @@ This proyect began as a fork of SteinhartHart work by [Andreas Tacke](https://gi
 ## Credits ##
 
 Celsius icon at the beginning is from [Flaticon.es](https://www.flaticon.es) designed by [Those Icons](https://www.flaticon.es/autores/those-icons)
-and licensed by [free license](img/licencia-37862535.pdf).
+and licensed by [free license](img/licencia-37862535_thermometer.pdf).
