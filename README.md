@@ -20,14 +20,15 @@ The Steinhart-Hart equation is the most widely used tool to interpolate
 the NTC thermistor resistance/temperature curve. It is a third order
 polynomial ecuation which provides very good curve fitting.
 
-![Steinhart-Hart_4](img/Steinhart-Hart_4.png)
+<p align=center><img src="img/Steinhart-Hart_4.png" alt="Steinhart-Hart_4"
+width=1000%></p>
 
 In the standard Steinhart-Hart equation the C parameter is set to zero.
 However, some manufacturers use all 4 coefficients. So we can use standard Steinhart-Hart
 ecuation with 3 coefficients.
 
 <p align=center><img src="img/Steinhart-Hart_3.png" alt="Steinhart-Hart_3"
-width=80%></p>
+width=70%></p>
 
 where:
 * **T** is the temperature (in kelvins),
@@ -39,7 +40,8 @@ These can usually be found in the data sheet.
 
 Other form of the equation is the use of B (beta) parameter
 
-![Steinhart-Hart_beta](img/Steinhart-Hart_beta.png)
+<p align=center><img src="img/Steinhart-Hart_beta.png" alt="Steinhart-Hart_beta"
+width=60%></p>
 
 where:
 * **T** is the temperature (in kelvins)
@@ -51,11 +53,12 @@ It can usually be found in the data sheet.
 
 Some manufacturers have begun providing regression coefficients as an alternative to Steinhart–Hart coefficients.
 See this document for more information. ["Comments on the Steinhart–Hart Equation"](http://www.bapihvac.com/wp-content/uploads/SHH_Equation_Comments.pdf)
-(PDF). Building Automation Products Inc. 11 November 2015. Retrieved 8 July 20]20
+(PDF). Building Automation Products Inc. 11 November 2015. Retrieved 8 July 2020.
 
 The most general form of the equation can be derived from extending the B parameter equation to an infinite series:
 
-![Steinhart-Hart_beta-dev](img/Steinhart-Hart_beta-dev.png)
+<p align=center><img src="img/Steinhart-Hart_beta_dev.png" alt="Steinhart-Hart_beta_dev"
+width=60%></p>
 
 You can get more information in this document:
 Matus, Michael (October 2011).
@@ -80,11 +83,13 @@ More information:
 
 In this library, it is take the beta ecuation and calculate temperature of the thermistor from it.
 
-![1/T=(beta + T0 * ln(R/NTC)/(beta * T0)](img/FastCalc_howto.png)
+<p align=center><img src="img/FastCalc_howto.png" alt="1/T=(beta + T0 * ln(R/NTC)/(beta * T0)"
+width=60%></p>
 
 So we can solve using this formula:
 
-![T=(beta * T0) / (beta + T0 * ln(R/NTC))](img/FastCalc.png)
+<p align=center><img src="img/FastCalc.png" alt="T=(beta * T0) / (beta + T0 * ln(R/NTC))"
+width=60%></p>
 
 where:
 * **T** is the temperature (in kelvins)
