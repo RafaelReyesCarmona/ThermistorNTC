@@ -57,7 +57,7 @@ See this document for more information. ["Comments on the Steinhart–Hart Equat
 
 The most general form of the equation can be derived from extending the B parameter equation to an infinite series:
 
-<p align=center><img src="img/Steinhart-Hart_beta_dev.png" alt="Steinhart-Hart_beta_dev"
+<p align=center><img src="img/Steinhart-Hart_beta-dev.png" alt="Steinhart-Hart_beta-dev"
 width=60%></p>
 
 You can get more information in this document:
@@ -84,12 +84,12 @@ More information:
 In this library, it is take the beta ecuation and calculate temperature of the thermistor from it.
 
 <p align=center><img src="img/FastCalc_howto.png" alt="1/T=(beta + T0 * ln(R/NTC)/(beta * T0)"
-width=60%></p>
+width=50%></p>
 
 So we can solve using this formula:
 
 <p align=center><img src="img/FastCalc.png" alt="T=(beta * T0) / (beta + T0 * ln(R/NTC))"
-width=60%></p>
+width=50%></p>
 
 where:
 * **T** is the temperature (in kelvins)
