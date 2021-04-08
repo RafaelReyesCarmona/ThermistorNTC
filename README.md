@@ -159,20 +159,15 @@ a conventional voltage divider circuit. It can used two forms of configurations.
 
 *Connecting NTC thermistor to VCC:*
 
-	              ____         ____
-	VCC +5 o-----|____|---+---|____|---o GND
-	            NTC 10K   |     10K
-	                      |
-	PIN A0 o--------------+
+<p align=center>
+<img src="img/temperature_sensor_VCC.png" alt="Temperature sensor VCC" width=50%>
+</p>
 
 *Or connecting NTC thermistor to GND:*
 
-	              ____         ____
-	VCC +5 o-----|____|---+---|____|---o GND
-	              10K     |   NTC 10K
-	                      |
-	PIN A0 o--------------+
-
+<p align=center>
+<img src="img/temperature_sensor_GND.png" alt="Temperature sensor GND" width=50%>
+</p>
 
 ## Installation ##
 

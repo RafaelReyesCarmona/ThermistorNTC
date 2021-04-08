@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.h - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.1.1
+v0.2
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -44,7 +44,13 @@ enum Thermistor_connection {
 
 class Thermistor {
     private:
-        int _ADC_MAX = 1024;  //ADC max. value (1023) + 1 -> 1024.
+			#if defined(__LGT8F__)
+			  int _ADC_MAX = 4096;  //ADC max. value (4093) + 1 -> 4096. But it will be 4069 by design.
+			#elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328__)
+				int _ADC_MAX = 1024;  //ADC max. value (1023) + 1 -> 1024.
+			#else
+				int _ADC_MAX = 1024;  //ADC max. value (1023) + 1 -> 1024.
+			#endif
         int _PIN;
         long _RESISTOR = 10000L;
         long _NTC_25C = 0L;
@@ -55,8 +61,6 @@ class Thermistor {
         float _BETA = 0.0;
         float _VREF;
 
-        bool _DEBUG_TIME;
-        unsigned long _time;
         float _alphaEMA_LOW = 0.79;
 
         // double calcVolts();
@@ -74,6 +78,7 @@ class Thermistor {
         Thermistor(int, long, long, double, double, double, double, float); // Constructor para 4 parametros (A,B,C,D).
         Thermistor(int, long, long, double, double, double, float); // Constructor para 3 parametros (A,B,D.. C = 0).
         Thermistor(int, long, long, float, float); // Constructor para parametro BETA del termistor.
+				Thermistor(int, long, long, float, long, float, long, float, float); // Constructor cuando se desconoce los parámetros del termistor.
         Thermistor(const Thermistor&) = delete; // Constructor de copia.
 
         void setADC(int);
@@ -89,7 +94,6 @@ class Thermistor {
 
         void calcBETA(float, long, float, long);
 
-        void setDEBUG(bool);
 };
 
 #endif

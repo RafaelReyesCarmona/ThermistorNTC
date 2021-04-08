@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.ino - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.1.1
+v0.2
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -30,6 +30,8 @@ rafael.reyes.carmona@gmail.com
  * Example sketch for the ThermistorNTC library.
  */
 
+#define DEBUG_TIME        // Use to debug. Before include library.
+
 #include <ThermistorNTC.h>
 
 Thermistor thermistor0(/* PIN */       A0,
@@ -50,8 +52,6 @@ Thermistor thermistor1(/* PIN */       A1,
 void setup(void)
 {
   Serial.begin(57600);
-  thermistor0.setDEBUG(1);
-  thermistor1.setDEBUG(1);
 }
 
 

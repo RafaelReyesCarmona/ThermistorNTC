@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.cpp - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.1.1
+v0.2
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -84,36 +84,66 @@ Thermistor::Thermistor(int PIN,
   pinMode(_PIN, INPUT);
 }
 
+// Constructor cuando se desconoce los parámetros del termistor.
+Thermistor::Thermistor(int PIN,
+                       long RESISTOR,
+                       long NTC_5C,
+                       float TEMP_5C,
+                       long NTC_25C,
+                       float TEMP_25C,
+                       long NTC_45C,
+                       float TEMP_45C,
+                       float VREF){
+  _PIN = PIN;
+  _RESISTOR = RESISTOR;
+  _VREF = VREF;
+
+  pinMode(_PIN, INPUT);
+
+
+}
 
 void Thermistor::SteinhartHart(Thermistor_connection ConType){
   float E = log(calcNTC(ConType)/(float)_NTC_25C);
-  if(_DEBUG_TIME) _time = micros();
+  #if defined(DEBUG_TIME)
+    unsigned long _time = micros();
+  #endif
   _temp_k = _A + (_B*E) + (_C*(E*E)) + (_D*(E*E*E));
   _temp_k = 1.0 / _temp_k;
   _temp_c = _temp_k - 273.15;
-  if (_DEBUG_TIME) Serial.print(micros()-_time);
+  #if defined(DEBUG_TIME)
+    Serial.print(micros()-_time);
+  #endif
 }
 
 
 void Thermistor::SteinhartHart_beta(Thermistor_connection ConType){
   _temp_k = log(calcNTC(ConType)/(float)_NTC_25C);
-  if(_DEBUG_TIME) _time = micros();
+  #if defined(DEBUG_TIME)
+    unsigned long _time = micros();
+  #endif
   _temp_k /= _BETA;
   _temp_k += 1.0 / 298.15;
   _temp_k = 1.0 / _temp_k;
   _temp_c = _temp_k - 273.15;
-  if (_DEBUG_TIME) Serial.print(micros()-_time);
+  #if defined(DEBUG_TIME)
+    Serial.print(micros()-_time);
+  #endif
 }
 
 
 void Thermistor::SteinhartHart_fast(Thermistor_connection ConType){
   _temp_k = log(calcNTC(ConType)/(float)_NTC_25C);
-  if(_DEBUG_TIME) _time = micros();
+  #if defined(DEBUG_TIME)
+    unsigned long _time = micros();
+  #endif
   _temp_k *= 298.15;
   _temp_k += _BETA;
   _temp_k = (_BETA * 298.15) / _temp_k;
   _temp_c = _temp_k - 273.15;
-  if (_DEBUG_TIME) Serial.print(micros()-_time);
+  #if defined(DEBUG_TIME)
+    Serial.print(micros()-_time);
+  #endif
 }
 
 
@@ -153,9 +183,13 @@ double Thermistor::fastTempFahrenheit(Thermistor_connection ConType){
 
 float Thermistor::getADC(int numsamples){
   float EMA_LOW;
+  #if defined(__LGT8F__)
 
-  int microdelay = 256000000 / F_CPU;
-
+  #elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328__)
+    int microdelay = 256000000 / F_CPU;
+  #else
+    int microdelay = 10;
+  #endif
   EMA_LOW = analogRead(_PIN);
 
   for (byte i = numsamples; i--; ){
@@ -199,7 +233,4 @@ void Thermistor::setEMA(float EMA){
   _alphaEMA_LOW = EMA;
 }
 
-
-void Thermistor::setDEBUG(bool DEBUG){
-  _DEBUG_TIME = DEBUG;
-}
+*/
