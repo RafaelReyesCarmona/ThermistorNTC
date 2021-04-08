@@ -160,13 +160,13 @@ a conventional voltage divider circuit. It can used two forms of configurations.
 *Connecting NTC thermistor to VCC:*
 
 <p align=center>
-<img src="img/temperature_sensor_VCC.png" alt="Temperature sensor VCC" width=20%>
+<img src="img/temperature_sensor_VCC.png" alt="Temperature sensor VCC" width=10%>
 </p>
 
 *Or connecting NTC thermistor to GND:*
 
 <p align=center>
-<img src="img/temperature_sensor_GND.png" alt="Temperature sensor GND" width=20%>
+<img src="img/temperature_sensor_GND.png" alt="Temperature sensor GND" width=10%>
 </p>
 
 ## Installation ##
