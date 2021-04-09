@@ -93,6 +93,7 @@ class Thermistor {
         double fastTempFahrenheit(Thermistor_connection ConType = VCC);
 
         void calcBETA(float, long, float, long);
+				void calcABD(float, long, float, long, floaT, long);
 
 };
 

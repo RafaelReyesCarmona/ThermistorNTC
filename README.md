@@ -160,13 +160,13 @@ a conventional voltage divider circuit. It can used two forms of configurations.
 *Connecting NTC thermistor to VCC:*
 
 <p align=center>
-<img src="img/temperature_sensor_VCC.png" alt="Temperature sensor VCC" width=10%>
+<img src="img/temperature_sensor_VCC.png" alt="Temperature sensor VCC" width=200>
 </p>
 
 *Or connecting NTC thermistor to GND:*
 
 <p align=center>
-<img src="img/temperature_sensor_GND.png" alt="Temperature sensor GND" width=10%>
+<img src="img/temperature_sensor_GND.png" alt="Temperature sensor GND" width=255>
 </p>
 
 ## Installation ##
@@ -220,6 +220,17 @@ Thermistor::Thermistor(int PIN,
                        long NTC_25C,
                        float BETA,
                        float VREF){
+
+// Constructor for unknowns thermistor parameters.
+Thermistor::Thermistor(int PIN,
+                      long RESISTOR,
+                      long NTC_5C,
+                      float TEMP_5C,
+                      long NTC_25C,
+                      float TEMP_25C,
+                      long NTC_45C,
+                      float TEMP_45C,
+                      float VREF){
 ```
 Where:
 * **PIN** - Analog port for get ADC (analogRead() function)

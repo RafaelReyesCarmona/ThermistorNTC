@@ -98,6 +98,9 @@ Thermistor::Thermistor(int PIN,
   _RESISTOR = RESISTOR;
   _VREF = VREF;
 
+  calcBETA(TEMP_5C, NTC_5C, TEMP_25C, NTC_25C);
+  calcABD(TEMP_5C, NTC_5C, TEMP_25C, NTC_25C, TEMP_45C, NTC_45C);
+
   pinMode(_PIN, INPUT);
 
 
@@ -223,6 +226,10 @@ void Thermistor::calcBETA(float T1, long RT1, float T2, long RT2){
   _BETA /= (T2 - T1);
 }
 
+
+void Thermistor::calcABD(float T1, long RT1, float T2, long RT2, float T3, long RT3){
+
+}
 
 void Thermistor::setADC(int ADC_MAX){
   _ADC_MAX = ADC_MAX;
