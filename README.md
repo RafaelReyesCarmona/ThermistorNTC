@@ -252,8 +252,6 @@ double getTempFahrenheit(Thermistor_connection ConType);
 double fastTempKelvin(Thermistor_connection ConType);
 double fastTempCelsius(Thermistor_connection ConType);
 double fastTempFahrenheit(Thermistor_connection ConType);
-
-void calcBETA(float, long, float, long);
 ```
 
 ### Simple Example ###

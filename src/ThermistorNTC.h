@@ -32,7 +32,6 @@ rafael.reyes.carmona@gmail.com
 	#include "WProgram.h"
 #endif
 
-
 #ifndef ThermistorNTC_h
 #define ThermistorNTC_h
 
@@ -64,6 +63,8 @@ class Thermistor {
         float _alphaEMA_LOW = 0.79;
 
         // double calcVolts();
+				void calcBETA(float, long, float, long);
+				void calcABD(float, long, float, long, float, long);
         double calcNTC(Thermistor_connection ConType = VCC);
         float getADC(int numsamples = 15);
         void SteinhartHart(Thermistor_connection ConType = VCC);
@@ -91,9 +92,6 @@ class Thermistor {
         double fastTempKelvin(Thermistor_connection ConType = VCC);
         double fastTempCelsius(Thermistor_connection ConType = VCC);
         double fastTempFahrenheit(Thermistor_connection ConType = VCC);
-
-        void calcBETA(float, long, float, long);
-				void calcABD(float, long, float, long, floaT, long);
 
 };
 

@@ -30,8 +30,6 @@ rafael.reyes.carmona@gmail.com
  * Example sketch for the ThermistorNTC library.
  */
 
-#define DEBUG_TIME        // Use to debug. Before include library.
-
 #include <ThermistorNTC.h>
 
 Thermistor thermistor0(/* PIN */       A0,
@@ -57,19 +55,16 @@ void setup(void)
 
 void loop(void)
 {
-  Serial.print("Sensor0(°C): ");
   double sensor0 = thermistor0.getTempCelsius();
-  Serial.print(" (microsecs) to calc. Temp(ºC): ");
+  Serial.print("Sensor0 calc. Temp(ºC): ");
   Serial.println(sensor0);
 
-  Serial.print("Sensor1(°C): ");
   double sensor1 = thermistor1.getTempCelsius();
-  Serial.print(" (microsecs) to calc. Temp(ºC): ");
+  Serial.print("Sensor1 calc. Temp(ºC): ");
   Serial.println(sensor1);
 
-  Serial.print("Sensor1_fast(°C): ");
   double sensor1_fast = thermistor1.fastTempCelsius();
-  Serial.print(" (microsecs) to calc. Temp(ºC): ");
+  Serial.print("Sensor1_fast calc. Temp(ºC): ");
   Serial.println(sensor1_fast);
 
   delay(1000);
