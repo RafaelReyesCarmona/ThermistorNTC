@@ -317,15 +317,15 @@ Thermistor thermistor2(/* PIN */      A2,
 When the coefficients are unknowns, It can use the above Constructor. The library calculate all the coefficients. It can use although getTemp... and fastTemp... Functions. It must measure the thermistor resistance at three different temperatures. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
 
 <p align=center>
-<img src="img/coefficients_ecuations.png" alt="Coefficients ecuations" width=30%>
+<img src="img/coefficients_ecuations.png" alt="Coefficients ecuations" width=40%>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solve.png" alt="Coefficients how to solve" width=30%>
+<img src="img/coefficients_solve.png" alt="Coefficients how to solve" width=40%>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution.png" alt="Coefficients solution A,B,D parameters" width=30%>
+<img src="img/coefficients_solution.png" alt="Coefficients solution A,B,D parameters" width=40%>
 </p>
 
 ## License ##
