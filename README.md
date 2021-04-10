@@ -219,26 +219,28 @@ Thermistor::Thermistor(int PIN,
                        long RESISTOR,
                        long NTC_25C,
                        float BETA,
-                       float VREF){
+                       float VREF)
 
 // Constructor for unknowns thermistor parameters.
 Thermistor::Thermistor(int PIN,
-                      long RESISTOR,
-                      long NTC_5C,
-                      float TEMP_5C,
-                      long NTC_25C,
-                      float TEMP_25C,
-                      long NTC_45C,
-                      float TEMP_45C,
-                      float VREF){
+                       long RESISTOR,
+                       long NTC_1,
+                       float TEMP_1,
+                       long NTC_2,
+                       float TEMP_2,
+                       long NTC_3,
+                       float TEMP_3,
+                       float VREF)
 ```
 Where:
 * **PIN** - Analog port for get ADC (analogRead() function)
 * **RESISTOR** - Value in ohms of resistor in voltage divisor.
-* **NTC_25C** - Resistence value of NTC thermistor at 298.15ºK (25ºC)
+* **NTC_25C** - Resistance value of NTC thermistor at 298.15ºK (25ºC)
 * **A**, **B**, **C**, **D** - NTC Thermistor coefficients
 * **BETA** - Beta coefficient of NTC thermistor.
 * **VREF** - Voltage aplied to voltage divisor (usually VCC.)
+* **NTC_1**, **NTC_2**, **NTC_3** - Resistance value of NTC thermistor at differents temperatures.
+* **TEMP_1**, **TEMP_2**, **TEMP_3** - Temperature value in (ºC). Must TEMP_1 < TEMP_2 < TEMP_3. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
 
 ### Functions implamented ###
 ```c++
@@ -296,6 +298,20 @@ void loop(void)
 
   delay(1000);
 }
+```
+
+## Thermistor with unknowns coefficients ##
+
+```c++
+Thermistor thermistor2(/* PIN */      A2,
+                      /* RESISTOR */  22170L,
+                      /* NTC_T1 */    355000L,
+                      /* T1 (ºC) */   0.0,
+                      /* NTC_T2 */    79300L,
+                      /* T1 (ºC) */   28.0,
+                      /* NTC_T3 */    58300L,
+                      /* T1 (ºC) */   35.0,
+                      /* Vref */      4.97);
 ```
 
 ## License ##

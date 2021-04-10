@@ -87,23 +87,20 @@ Thermistor::Thermistor(int PIN,
 // Constructor cuando se desconoce los parámetros del termistor.
 Thermistor::Thermistor(int PIN,
                        long RESISTOR,
-                       long NTC_5C,
-                       float TEMP_5C,
-                       long NTC_25C,
-                       float TEMP_25C,
-                       long NTC_45C,
-                       float TEMP_45C,
+                       long NTC_1,
+                       float TEMP_1,
+                       long NTC_2,
+                       float TEMP_2,
+                       long NTC_3,
+                       float TEMP_3,
                        float VREF){
   _PIN = PIN;
   _RESISTOR = RESISTOR;
   _VREF = VREF;
 
-  calcBETA(TEMP_5C, NTC_5C, TEMP_25C, NTC_25C);
-  calcABD(TEMP_5C, NTC_5C, TEMP_25C, NTC_25C, TEMP_45C, NTC_45C);
+  calcCoefficients(TEMP_1, NTC_1, TEMP_2, NTC_2, TEMP_3, NTC_3);
 
   pinMode(_PIN, INPUT);
-
-
 }
 
 void Thermistor::SteinhartHart(Thermistor_connection ConType){
@@ -200,16 +197,44 @@ double Thermistor::calcNTC(Thermistor_connection ConType){
 }
 
 
-void Thermistor::calcBETA(float T1, long RT1, float T2, long RT2){
-  _BETA = log(RT1/RT2);
-  _BETA *= T1 * T2;
-  _BETA /= (T2 - T1);
+void Thermistor::calcCoefficients(float T1, long RT1, float T2, long RT2, float T3, long RT3){
+  float L1 = log((float)RT1);
+  float L2 = log((float)RT2);
+  float L3 = log((float)RT3);
+  float Y1 = 1.0f / (T1 + 273.15f);
+  float Y2 = 1.0f / (T2 + 273.15f);
+  float Y3 = 1.0f / (T3 + 273.15f);
+  double yY2 = (Y2 - Y1)/(L2 - L1);
+  double yY3 = (Y3 - Y1)/(L3 - L1);
+
+  _D = (yY3 - yY2);
+  _D /= (L3 -L2) * (L1 + L2 + L3);
+  _B = (L1 * L1) + (L1 * L2) + (L2 *L2);
+  _B *= _D;
+  _B = yY2 - _B;
+  _A = _D * L1 * L1;
+  _A += _B;
+  _A *= L1;
+  _A = Y1 - _A;
+
+  float _T1 = T1 + 273.15f;
+  float _T2 = T2 + 273.15f;
+  float _T3 = T3 + 273.15f;
+  float BETA1 = _T1 * _T2 * (L1 - L2) / (_T2-_T1);
+  float BETA2 = _T2 * _T3 * (L2 - L3) / (_T3-_T2);
+  _BETA = (BETA1 + BETA2) / 2.0f;
+
+  long NTC_25C1 = RT1 / exp(- _BETA * (_T1 - 298.15f)/ _T1 / 298.15f);
+  long NTC_25C2 = RT2 / exp(- _BETA * (_T2 - 298.15f)/ _T2 / 298.15f);
+  long NTC_25C3 = RT3 / exp(- _BETA * (_T3 - 298.15f)/ _T3 / 298.15f);
+  _NTC_25C = (NTC_25C1 + NTC_25C2 + NTC_25C3) / 3L ;
+/*
+  _D =((1/_T1-1/_T2)-(log((float)RT1)- log((float)RT2))*(1/_T1-1/_T3)/(log((float)RT1)-log((float)RT3)))/((pow(log((float)RT1),3)-pow(log((float)RT2),3)) - (log((float)RT1)-log((float)RT2))*(pow(log((float)RT1),3)-pow(log((float)RT3),3))/(log((float)RT1)-log((float)RT3)));
+  _B =((1/_T1-1/_T2)-_D*pow(log((float)RT1),3)-pow(log((float)RT2),3))/(log((float)RT1)-log((float)RT2));
+  _A = 1/_T1-_D*log((float)RT1)*log((float)RT1)*log((float)RT1)-_B*log((float)RT1);
+*/
 }
 
-
-void Thermistor::calcABD(float T1, long RT1, float T2, long RT2, float T3, long RT3){
-
-}
 
 void Thermistor::setADC(int ADC_MAX){
   _ADC_MAX = ADC_MAX;

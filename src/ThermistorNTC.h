@@ -62,9 +62,7 @@ class Thermistor {
 
         float _alphaEMA_LOW = 0.79;
 
-        // double calcVolts();
-				void calcBETA(float, long, float, long);
-				void calcABD(float, long, float, long, float, long);
+				void calcCoefficients(float, long, float, long, float, long);
         double calcNTC(Thermistor_connection ConType = VCC);
         float getADC(int numsamples = 15);
         void SteinhartHart(Thermistor_connection ConType = VCC);
