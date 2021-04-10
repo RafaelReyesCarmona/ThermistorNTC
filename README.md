@@ -314,6 +314,8 @@ Thermistor thermistor2(/* PIN */      A2,
                       /* Vref */      4.97);
 ```
 
+When the coefficients are unknowns, It can use the above Constructor. The library calculate all the coefficients. It can use although getTemp... and fastTemp... Functions. It must measure the thermistor resistance at three different temperatures. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
+
 ## License ##
 
 This file is part of ThermistorNTC Library.
