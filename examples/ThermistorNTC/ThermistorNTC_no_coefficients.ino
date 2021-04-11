@@ -41,11 +41,11 @@ Thermistor thermistor1(/* PIN */       A1,
 Thermistor thermistor2(/* PIN */      A2,
                       /* RESISTOR */  22170L,
                       /* NTC_T1 */    355000L,
-                      /* T1 (ºC) */   0.0,
+                      /* T1 (ºC) */   0.0,  // 273,15 ºK
                       /* NTC_T2 */    79300L,
-                      /* T1 (ºC) */   28.0,
+                      /* T1 (ºC) */   28.0, // 301,15 ºK
                       /* NTC_T3 */    58300L,
-                      /* T1 (ºC) */   35.0,
+                      /* T1 (ºC) */   35.0, // 308,15 ºK
                       /* Vref */      4.97);
 
 void setup(void)
