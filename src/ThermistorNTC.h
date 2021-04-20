@@ -60,9 +60,10 @@ class Thermistor {
         float _BETA = 0.0;
         float _VREF;
 
-        float _alphaEMA_LOW = 0.79;
+        float _alphaEMA_LOW = 0.91;
 
-				void calcCoefficients(float, long, float, long, float, long);
+				void calcCoefficients3(float, long, float, long, float, long);
+				void calcCoefficients4(float, long, float, long, float, long, float, long);
         double calcNTC(Thermistor_connection ConType = VCC);
         float getADC(int numsamples = 15);
         void SteinhartHart(Thermistor_connection ConType = VCC);
@@ -77,7 +78,8 @@ class Thermistor {
         Thermistor(int, long, long, double, double, double, double, float); // Constructor para 4 parametros (A,B,C,D).
         Thermistor(int, long, long, double, double, double, float); // Constructor para 3 parametros (A,B,D.. C = 0).
         Thermistor(int, long, long, float, float); // Constructor para parametro BETA del termistor.
-				Thermistor(int, long, long, float, long, float, long, float, float); // Constructor cuando se desconoce los parámetros del termistor.
+				Thermistor(int, long, long, float, long, float, long, float, float); // Constructor cuando se desconoce los parámetros del termistor. 3 Coeficientes
+				Thermistor(int, long, long, float, long, float, long, float, long, float, float); // Constructor cuando se desconoce los parámetros del termistor. 4 Coeficientes
         Thermistor(const Thermistor&) = delete; // Constructor de copia.
 
         void setADC(int);
@@ -91,6 +93,9 @@ class Thermistor {
         double fastTempCelsius(Thermistor_connection ConType = VCC);
         double fastTempFahrenheit(Thermistor_connection ConType = VCC);
 
+				double getTempKelvin_SteinHart(Thermistor_connection ConType = VCC);
+				double getTempCelsius_SteinHart(Thermistor_connection ConType = VCC);
+				double getTempFahrenheit_SteinHart(Thermistor_connection ConType = VCC);
 };
 
 #endif

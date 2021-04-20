@@ -60,7 +60,7 @@ void loop(void)
   Serial.print("Sensor1 calc. Temp(ºC): ");
   Serial.print(sensor1);
 
-  double sensor2 = thermistor2.fastTempCelsius();
+  double sensor2 = thermistor2.getTempCelsius_SteinHart();
   Serial.print(",Sensor2 calc. Temp(ºC): ");
   Serial.println(sensor2);
 

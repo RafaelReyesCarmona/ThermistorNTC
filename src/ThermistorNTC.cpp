@@ -84,7 +84,7 @@ Thermistor::Thermistor(int PIN,
   pinMode(_PIN, INPUT);
 }
 
-// Constructor cuando se desconoce los parámetros del termistor.
+// Constructor cuando se desconoce los parámetros del termistor. 3 Coeficientes.
 Thermistor::Thermistor(int PIN,
                        long RESISTOR,
                        long NTC_1,
@@ -98,10 +98,32 @@ Thermistor::Thermistor(int PIN,
   _RESISTOR = RESISTOR;
   _VREF = VREF;
 
-  calcCoefficients(TEMP_1, NTC_1, TEMP_2, NTC_2, TEMP_3, NTC_3);
+  calcCoefficients3(TEMP_1, NTC_1, TEMP_2, NTC_2, TEMP_3, NTC_3);
 
   pinMode(_PIN, INPUT);
 }
+
+// Constructor cuando se desconoce los parámetros del termistor. 4 Coeficientes.
+Thermistor::Thermistor(int PIN,
+                       long RESISTOR,
+                       long NTC_1,
+                       float TEMP_1,
+                       long NTC_2,
+                       float TEMP_2,
+                       long NTC_3,
+                       float TEMP_3,
+                       long NTC_4,
+                       float TEMP_4
+                       float VREF){
+  _PIN = PIN;
+  _RESISTOR = RESISTOR;
+  _VREF = VREF;
+
+  calcCoefficients4(TEMP_1, NTC_1, TEMP_2, NTC_2, TEMP_3, NTC_3, TEMP_4, NTC_4);
+
+  pinMode(_PIN, INPUT);
+}
+
 
 void Thermistor::SteinhartHart(Thermistor_connection ConType){
   float E = log(calcNTC(ConType)/(float)_NTC_25C);
@@ -126,6 +148,23 @@ void Thermistor::SteinhartHart_fast(Thermistor_connection ConType){
   _temp_k += _BETA;
   _temp_k = (_BETA * 298.15) / _temp_k;
   _temp_c = _temp_k - 273.15;
+}
+
+
+double Thermistor::getTempKelvin_SteinHart(Thermistor_connection ConType) {
+  SteinhartHart(ConType);
+  return _temp_k;
+}
+
+
+double Thermistor::getTempCelsius_SteinHart(Thermistor_connection ConType) {
+  SteinhartHart(ConType);
+  return _temp_c;
+}
+
+
+double Thermistor::getTempFahrenheit_SteinHart(Thermistor_connection ConType){
+  return getTempCelsius_SteinHart(ConType) * 9/5 + 32;
 }
 
 
@@ -197,7 +236,7 @@ double Thermistor::calcNTC(Thermistor_connection ConType){
 }
 
 
-void Thermistor::calcCoefficients(float T1, long RT1, float T2, long RT2, float T3, long RT3){
+void Thermistor::calcCoefficients3(float T1, long RT1, float T2, long RT2, float T3, long RT3){
   float L1 = log((float)RT1);
   float L2 = log((float)RT2);
   float L3 = log((float)RT3);
@@ -233,6 +272,98 @@ void Thermistor::calcCoefficients(float T1, long RT1, float T2, long RT2, float 
   _B =((1/_T1-1/_T2)-_D*pow(log((float)RT1),3)-pow(log((float)RT2),3))/(log((float)RT1)-log((float)RT2));
   _A = 1/_T1-_D*log((float)RT1)*log((float)RT1)*log((float)RT1)-_B*log((float)RT1);
 */
+}
+
+
+void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float T3, long RT3, float T4, long RT4){
+  float L1 = log((float)RT1);
+  float L2 = log((float)RT2);
+  float L3 = log((float)RT3);
+  float L4 = log((float)RT4);
+  float L1_2 = L1*L1;
+  float L2_2 = L2*L2;
+  float L3_2 = L2*L2;
+  float L4_2 = L2*L2;
+  float L1_3 = L1*L1_2;
+  float L2_3 = L2*L2_2;
+  float L3_3 = L3*L3_2;
+  float L4_3 = L4*L4_2;
+  float Y1 = 1.0f / (T1 + 273.15f);
+  float Y2 = 1.0f / (T2 + 273.15f);
+  float Y3 = 1.0f / (T3 + 273.15f);
+  float Y4 = 1.0f / (T4 + 273.15f);
+/*
+  double ADjun = (L2*L3_2*L4_3)+(L3*L4_2*L2_3)+(L4*L2_2*L3_3)-(L4*L3_2*L2_3)-(L3*L2_2*L4_3)-(L2*L4_2*L3_3);
+  double DS = ADjun;
+  double DA = Y1 * ADjun;
+  ADjun = ((L1*L3_2*L4_3)+(L3*L4_2*L1_3)+(L4*L1_2*L3_3)-(L4*L3_2*L1_3)-(L3*L1_2*L4_3)-(L1*L4_2*L3_3));
+  DS -=  ADjun;
+  DA -= Y2 * ADjun;
+  ADjun = (L1*L2_2*L4_3)+(L2*L4_2*L1_3)+(L4*L1_2*L2_3)-(L4*L2_2*L1_3)-(L2*L1_2*L4_3)-(L1*L4_2*L2_3);
+  DS +=  ADjun;
+  DA += Y3 * ADjun;
+  ADjun = ((L1*L2_2*L3_3)+(L2*L3_2*L1_3)+(L3*L1_2*L2_3)-(L3*L2_2*L1_3)-(L2*L1_2*L3_3)-(L1*L3_2*L2_3));
+  DS -= ADjun;
+  DA -= Y4 * ADjun;
+
+  double DB = -(Y1) * ((L3_2*L4_3)+(L4_2*L2_3)+(L2_2*L3_3)-(L3_2*L2_3)-(L2_2*L4_3)-(L4_2*L3_3));
+  DB += (Y2 * ((L3_2*L4_3)+(L4_2*L1_3)+(L1_2*L3_3)-(L3_2*L1_3)-(L1_2*L4_3)-(L4_2*L3_3)));
+  DB -= (Y3 * ((L2_2*L4_3)+(L4_2*L1_3)+(L1_2*L2_3)-(L2_2*L1_3)-(L1_2*L4_3)-(L4_2*L2_3)));
+  DB += (Y4 * ((L2_2*L3_3)+(L3_2*L1_3)+(L1_2*L2_3)-(L2_2*L1_3)-(L1_2*L3_3)-(L3_2*L2_3)));
+  // Desde aqui hay que revisar la fórmula.
+
+  double DC = Y1 * ((L3*L4_3)+(L4*L2_3)+(L2*L3_3)-(L3*L2_3)-(L2*L4_3)-(L4*L3_3));
+  DC -= (Y2 * ((L3*L4_3)+(L4*L1_3)+(L1*L3_3)-(L3*L1_3)-(L1*L4_3)-(L4*L3_3)));
+  DC += (Y3 * );
+  DC -= (Y4 * );
+  double DD = Y1 * ((L2*L3_2)+(L3*L4_2)+(L4*L2_2)-(L4*L3_2)-(L3*L2_2)-(L2*L4_2));
+  DD -= (Y2 * ((L1*L3_2)+(L3*L4_2)+(L4*L1_2)-(L4*L3_2)-(L3*L1_2)-(L1*L4_2)));
+  DD += (Y3 * ((L1*L2_2)+(L2*L4_2)+(L4*L1_2)-(L4*L2_2)-(L2*L1_2)-(L1*L4_2)));
+  DD -= (Y4 * ((L1*L2_2)+(L2*L3_2)+(L3*L1_2)-(L3*L2_2)-(L2*L1_2)-(L1*L3_2)));
+// Fin de la revisión.
+  _D = DD / DS;
+  _C = DC / DS;
+  _B = DB / DS;
+  _A = DA / DS;
+*/
+  float L2_L1 = L2 - L1;
+  float L3_L1 = L3 - L1;
+  float L4_L1 = L4 - L1;
+
+  double DS1_1 = ((L3_2-L1_2)*(L2_L1)-(L2_2-L1_2)*(L3_L1));
+  double DS1_2 = ((L4_3-L1_3)*(L2_L1)-(L2_3-L1_3)*(L4_L1));
+  double DS2_1 = ((L4_2-L1_2)*(L2_L1)-(L2_2-L1_2)*(L4_L1));
+  double DS2_2 = ((L3_3-L1_3)*(L2_L1)-(L2_3-L1_3)*(L3_L1));
+  double DY1 = ((Y3-Y1)*(L2-L1)-(Y2-Y1)*(L3-L1));
+  double DY2 = ((Y4-Y1)*(L2-L1)-(Y2-Y1)*(L4-L1));
+
+  double DS = (DS1_1 * DS1_2) - (DS2_1 * DS2_2);
+  double DC = (DY1 * DS1_2) - (DY2 * DS2_2);
+  double DD = (DY2 * DS1_1) - (DY1 * DS2_1);
+
+  _D = DD / DS;
+  _C = DC / DS;
+
+  double Z1 = Y1 - _C*L1_2 - _D*L1_3;
+  double Z2 = Y2 - _C*L2_2 - _D*L2_3;
+
+  _A = ((Z1 * L2) - (Z2 * L1)) / L2_L1;
+  _B = (Z2 - Z1) / L2_L1;
+
+  float _T1 = T1 + 273.15f;
+  float _T2 = T2 + 273.15f;
+  float _T3 = T3 + 273.15f;
+  float _T4 = T4 + 273.15f;
+  float BETA1 = _T1 * _T2 * (L1 - L2) / (_T2-_T1);
+  float BETA2 = _T2 * _T3 * (L2 - L3) / (_T3-_T2);
+  float BETA3 = _T3 * _T4 * (L3 - L4) / (_T4-_T3);
+  _BETA = (BETA1 + BETA2 + BETA3) / 3.0f;
+
+  long NTC_25C1 = RT1 / exp(- _BETA * (_T1 - 298.15f)/ _T1 / 298.15f);
+  long NTC_25C2 = RT2 / exp(- _BETA * (_T2 - 298.15f)/ _T2 / 298.15f);
+  long NTC_25C3 = RT3 / exp(- _BETA * (_T3 - 298.15f)/ _T3 / 298.15f);
+  long NTC_25C4 = RT4 / exp(- _BETA * (_T4 - 298.15f)/ _T4 / 298.15f);
+  _NTC_25C = (NTC_25C1 + NTC_25C2 + NTC_25C3 + NTC_25C4) / 4L ;
 }
 
 
