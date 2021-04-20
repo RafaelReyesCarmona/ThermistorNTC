@@ -113,7 +113,7 @@ Thermistor::Thermistor(int PIN,
                        long NTC_3,
                        float TEMP_3,
                        long NTC_4,
-                       float TEMP_4
+                       float TEMP_4,
                        float VREF){
   _PIN = PIN;
   _RESISTOR = RESISTOR;
@@ -126,8 +126,14 @@ Thermistor::Thermistor(int PIN,
 
 
 void Thermistor::SteinhartHart(Thermistor_connection ConType){
-  float E = log(calcNTC(ConType)/(float)_NTC_25C);
+  float E = log(calcNTC(ConType));
   _temp_k = _A + (_B*E) + (_C*(E*E)) + (_D*(E*E*E));
+  Serial.print("\n");
+  Serial.println(_A,10 );
+  Serial.println(_B,12 );
+  Serial.println(_C,12 );
+  Serial.println(_D,15 );
+  Serial.println(_NTC_25C,1 );
   _temp_k = 1.0 / _temp_k;
   _temp_c = _temp_k - 273.15;
 }
@@ -237,28 +243,13 @@ double Thermistor::calcNTC(Thermistor_connection ConType){
 
 
 void Thermistor::calcCoefficients3(float T1, long RT1, float T2, long RT2, float T3, long RT3){
-  float L1 = log((float)RT1);
-  float L2 = log((float)RT2);
-  float L3 = log((float)RT3);
-  float Y1 = 1.0f / (T1 + 273.15f);
-  float Y2 = 1.0f / (T2 + 273.15f);
-  float Y3 = 1.0f / (T3 + 273.15f);
-  double yY2 = (Y2 - Y1)/(L2 - L1);
-  double yY3 = (Y3 - Y1)/(L3 - L1);
-
-  _D = (yY3 - yY2);
-  _D /= (L3 -L2) * (L1 + L2 + L3);
-  _B = (L1 * L1) + (L1 * L2) + (L2 *L2);
-  _B *= _D;
-  _B = yY2 - _B;
-  _A = _D * L1 * L1;
-  _A += _B;
-  _A *= L1;
-  _A = Y1 - _A;
-
   float _T1 = T1 + 273.15f;
   float _T2 = T2 + 273.15f;
   float _T3 = T3 + 273.15f;
+  float L1 = log((float)RT1);
+  float L2 = log((float)RT2);
+  float L3 = log((float)RT3);
+
   float BETA1 = _T1 * _T2 * (L1 - L2) / (_T2-_T1);
   float BETA2 = _T2 * _T3 * (L2 - L3) / (_T3-_T2);
   _BETA = (BETA1 + BETA2) / 2.0f;
@@ -267,19 +258,47 @@ void Thermistor::calcCoefficients3(float T1, long RT1, float T2, long RT2, float
   long NTC_25C2 = RT2 / exp(- _BETA * (_T2 - 298.15f)/ _T2 / 298.15f);
   long NTC_25C3 = RT3 / exp(- _BETA * (_T3 - 298.15f)/ _T3 / 298.15f);
   _NTC_25C = (NTC_25C1 + NTC_25C2 + NTC_25C3) / 3L ;
-/*
-  _D =((1/_T1-1/_T2)-(log((float)RT1)- log((float)RT2))*(1/_T1-1/_T3)/(log((float)RT1)-log((float)RT3)))/((pow(log((float)RT1),3)-pow(log((float)RT2),3)) - (log((float)RT1)-log((float)RT2))*(pow(log((float)RT1),3)-pow(log((float)RT3),3))/(log((float)RT1)-log((float)RT3)));
-  _B =((1/_T1-1/_T2)-_D*pow(log((float)RT1),3)-pow(log((float)RT2),3))/(log((float)RT1)-log((float)RT2));
-  _A = 1/_T1-_D*log((float)RT1)*log((float)RT1)*log((float)RT1)-_B*log((float)RT1);
-*/
+
+
+  float Y1 = 1.0f / (_T1);
+  float Y2 = 1.0f / (_T2);
+  float Y3 = 1.0f / (_T3);
+  double yY2 = (Y2 - Y1)/(L2 - L1);
+  double yY3 = (Y3 - Y1)/(L3 - L1);
+
+  _D = (yY3 - yY2);
+  _D /= ((L3 -L2) * (L1 + L2 + L3));
+  _B = (L1 * L1) + (L1 * L2) + (L2 *L2);
+  _B *= _D;
+  _B = yY2 - _B;
+  _A = _D * L1 * L1;
+  _A += _B;
+  _A *= L1;
+  _A = Y1 - _A;
 }
 
 
 void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float T3, long RT3, float T4, long RT4){
+  float _T1 = T1 + 273.15f;
+  float _T2 = T2 + 273.15f;
+  float _T3 = T3 + 273.15f;
+  float _T4 = T4 + 273.15f;
   float L1 = log((float)RT1);
   float L2 = log((float)RT2);
   float L3 = log((float)RT3);
   float L4 = log((float)RT4);
+
+  float BETA1 = _T1 * _T2 * (L1 - L2) / (_T2-_T1);
+  float BETA2 = _T2 * _T3 * (L2 - L3) / (_T3-_T2);
+  float BETA3 = _T3 * _T4 * (L3 - L4) / (_T4-_T3);
+  _BETA = (BETA1 + BETA2 + BETA3) / 3.0f;
+
+  long NTC_25C1 = RT1 / exp(- _BETA * (_T1 - 298.15f)/ _T1 / 298.15f);
+  long NTC_25C2 = RT2 / exp(- _BETA * (_T2 - 298.15f)/ _T2 / 298.15f);
+  long NTC_25C3 = RT3 / exp(- _BETA * (_T3 - 298.15f)/ _T3 / 298.15f);
+  long NTC_25C4 = RT4 / exp(- _BETA * (_T4 - 298.15f)/ _T4 / 298.15f);
+  _NTC_25C = (NTC_25C1 + NTC_25C2 + NTC_25C3 + NTC_25C4) / 4L ;
+
   float L1_2 = L1*L1;
   float L2_2 = L2*L2;
   float L3_2 = L2*L2;
@@ -288,11 +307,11 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
   float L2_3 = L2*L2_2;
   float L3_3 = L3*L3_2;
   float L4_3 = L4*L4_2;
-  float Y1 = 1.0f / (T1 + 273.15f);
-  float Y2 = 1.0f / (T2 + 273.15f);
-  float Y3 = 1.0f / (T3 + 273.15f);
-  float Y4 = 1.0f / (T4 + 273.15f);
-/*
+  float Y1 = 1.0f / (_T1);
+  float Y2 = 1.0f / (_T2);
+  float Y3 = 1.0f / (_T3);
+  float Y4 = 1.0f / (_T4);
+
   double ADjun = (L2*L3_2*L4_3)+(L3*L4_2*L2_3)+(L4*L2_2*L3_3)-(L4*L3_2*L2_3)-(L3*L2_2*L4_3)-(L2*L4_2*L3_3);
   double DS = ADjun;
   double DA = Y1 * ADjun;
@@ -310,32 +329,32 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
   DB += (Y2 * ((L3_2*L4_3)+(L4_2*L1_3)+(L1_2*L3_3)-(L3_2*L1_3)-(L1_2*L4_3)-(L4_2*L3_3)));
   DB -= (Y3 * ((L2_2*L4_3)+(L4_2*L1_3)+(L1_2*L2_3)-(L2_2*L1_3)-(L1_2*L4_3)-(L4_2*L2_3)));
   DB += (Y4 * ((L2_2*L3_3)+(L3_2*L1_3)+(L1_2*L2_3)-(L2_2*L1_3)-(L1_2*L3_3)-(L3_2*L2_3)));
-  // Desde aqui hay que revisar la fórmula.
 
   double DC = Y1 * ((L3*L4_3)+(L4*L2_3)+(L2*L3_3)-(L3*L2_3)-(L2*L4_3)-(L4*L3_3));
   DC -= (Y2 * ((L3*L4_3)+(L4*L1_3)+(L1*L3_3)-(L3*L1_3)-(L1*L4_3)-(L4*L3_3)));
-  DC += (Y3 * );
-  DC -= (Y4 * );
-  double DD = Y1 * ((L2*L3_2)+(L3*L4_2)+(L4*L2_2)-(L4*L3_2)-(L3*L2_2)-(L2*L4_2));
-  DD -= (Y2 * ((L1*L3_2)+(L3*L4_2)+(L4*L1_2)-(L4*L3_2)-(L3*L1_2)-(L1*L4_2)));
-  DD += (Y3 * ((L1*L2_2)+(L2*L4_2)+(L4*L1_2)-(L4*L2_2)-(L2*L1_2)-(L1*L4_2)));
-  DD -= (Y4 * ((L1*L2_2)+(L2*L3_2)+(L3*L1_2)-(L3*L2_2)-(L2*L1_2)-(L1*L3_2)));
-// Fin de la revisión.
+  DC += (Y3 * ((L2*L4_3)+(L4*L1_3)+(L1*L2_3)-(L2*L1_3)-(L1*L4_3)-(L4*L2_3)));
+  DC -= (Y4 * ((L2*L3_3)+(L3*L1_3)+(L1*L2_3)-(L2*L1_3)-(L1*L3_3)-(L3*L2_3)));
+
+  double DD = -(Y1) * ((L3*L4_2)+(L4*L2_2)+(L2*L3_2)-(L3*L2_2)-(L2*L4_2)-(L4*L3_2));
+  DD += (Y2 * ((L3*L4_2)+(L4*L1_2)+(L1*L3_2)-(L3*L1_2)-(L1*L4_2)-(L4*L3_2)));
+  DD -= (Y3 * ((L2*L4_2)+(L4*L1_2)+(L1*L2_2)-(L2*L1_2)-(L1*L4_2)-(L4*L2_2)));
+  DD += (Y4 * ((L2*L3_2)+(L3*L1_2)+(L1*L2_2)-(L2*L1_2)-(L1*L3_2)-(L3*L2_2)));
+
   _D = DD / DS;
   _C = DC / DS;
   _B = DB / DS;
   _A = DA / DS;
-*/
+/*
   float L2_L1 = L2 - L1;
   float L3_L1 = L3 - L1;
   float L4_L1 = L4 - L1;
 
-  double DS1_1 = ((L3_2-L1_2)*(L2_L1)-(L2_2-L1_2)*(L3_L1));
-  double DS1_2 = ((L4_3-L1_3)*(L2_L1)-(L2_3-L1_3)*(L4_L1));
-  double DS2_1 = ((L4_2-L1_2)*(L2_L1)-(L2_2-L1_2)*(L4_L1));
-  double DS2_2 = ((L3_3-L1_3)*(L2_L1)-(L2_3-L1_3)*(L3_L1));
-  double DY1 = ((Y3-Y1)*(L2-L1)-(Y2-Y1)*(L3-L1));
-  double DY2 = ((Y4-Y1)*(L2-L1)-(Y2-Y1)*(L4-L1));
+  double DS1_1 = (L3_2-L1_2) * L2_L1 - (L2_2-L1_2) * L3_L1;
+  double DS1_2 = (L4_3-L1_3) * L2_L1 - (L2_3-L1_3) * L4_L1;
+  double DS2_1 = (L4_2-L1_2) * L2_L1 - (L2_2-L1_2) * L4_L1;
+  double DS2_2 = (L3_3-L1_3) * L2_L1 - (L2_3-L1_3) * L3_L1;
+  double DY1 = (Y3-Y1) * (L2-L1) - (Y2-Y1) * (L3-L1);
+  double DY2 = (Y4-Y1) * (L2-L1) - (Y2-Y1) * (L4-L1);
 
   double DS = (DS1_1 * DS1_2) - (DS2_1 * DS2_2);
   double DC = (DY1 * DS1_2) - (DY2 * DS2_2);
@@ -344,26 +363,14 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
   _D = DD / DS;
   _C = DC / DS;
 
-  double Z1 = Y1 - _C*L1_2 - _D*L1_3;
-  double Z2 = Y2 - _C*L2_2 - _D*L2_3;
+  double Z1 = Y1 - (_C * L1_2) - (_D * L1_3);
+  double Z2 = Y2 - (_C * L2_2) - (_D * L2_3);
 
-  _A = ((Z1 * L2) - (Z2 * L1)) / L2_L1;
-  _B = (Z2 - Z1) / L2_L1;
-
-  float _T1 = T1 + 273.15f;
-  float _T2 = T2 + 273.15f;
-  float _T3 = T3 + 273.15f;
-  float _T4 = T4 + 273.15f;
-  float BETA1 = _T1 * _T2 * (L1 - L2) / (_T2-_T1);
-  float BETA2 = _T2 * _T3 * (L2 - L3) / (_T3-_T2);
-  float BETA3 = _T3 * _T4 * (L3 - L4) / (_T4-_T3);
-  _BETA = (BETA1 + BETA2 + BETA3) / 3.0f;
-
-  long NTC_25C1 = RT1 / exp(- _BETA * (_T1 - 298.15f)/ _T1 / 298.15f);
-  long NTC_25C2 = RT2 / exp(- _BETA * (_T2 - 298.15f)/ _T2 / 298.15f);
-  long NTC_25C3 = RT3 / exp(- _BETA * (_T3 - 298.15f)/ _T3 / 298.15f);
-  long NTC_25C4 = RT4 / exp(- _BETA * (_T4 - 298.15f)/ _T4 / 298.15f);
-  _NTC_25C = (NTC_25C1 + NTC_25C2 + NTC_25C3 + NTC_25C4) / 4L ;
+  _A = (Z1 * L2) - (Z2 * L1);
+  _A /= L2_L1;
+  _B = Z2 - Z1;
+  _B /= L2_L1;
+*/
 }
 
 

@@ -16,11 +16,14 @@ Thermistor	KEYWORD1
 getTempKelvin	KEYWORD2
 getTempCelsius	KEYWORD2
 getTempFahrenheit	KEYWORD2
+getTempKelvin_SteinHart	KEYWORD2
+getTempCelsius_SteinHart	KEYWORD2
+getTempFahrenheit_SteinHart	KEYWORD2
 fastTempKelvin	KEYWORD2
 fastTempCelsius	KEYWORD2
 fastTempFahrenheit	KEYWORD2
 setADC	KEYWORD2
-calcBETA	KEYWORD2
+setEMA	KEYWORD2
 
 
 #########################################
