@@ -272,7 +272,7 @@ double getTempCelsius_SteinHart(Thermistor_connection ConType);
 double getTempFahrenheit_SteinHart(Thermistor_connection ConType);
 ```
 * **setADC** - Set maximal value of ADC. For 10-bits ADC resolution, will be 2^10 = 1024. For 12-bits ADC resolution, the value will be 2^12 = 4096. Library autodetect for Atmega328, ATmega168 and LGT8F328P.
-* **setEMA** - Set value for EMA Filter ADC readings. Default is 0,91. The library gets 15 values from ADC port at maximal resolution every time it is called for stimate the temperature. It is returned the value filtred with EMA with formula:
+* **setEMA** - Set value for EMA Filter ADC readings. Default is 0,91. The library gets 15 values from ADC port at maximal resolution every time it is called for estimated the temperature. It is returned the value filtered with EMA with formula:
 
 * **getTemp...** Return the temperature in the respective range using Beta equation.
 * **fastTemp...** Return the temperature in the respective range using Fast equation. More fast than the other methods. It is used beta parameter.
@@ -352,7 +352,7 @@ Thermistor thermistor2(/* PIN */      A2,
 
 When the coefficients are unknowns, It can use the above Constructor. The library calculate all the coefficients. It can use although getTemp... and fastTemp... Functions. It must measure the thermistor resistance at three or four different temperatures. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
 
-When it is used the Constructors above the library calc **A**, **B**, **C**, **D**, **BETA** and **NTC_25C** parameters. So, it can use any function to get the temperature. When use three pair of values (Resistence of NTC, Temperature ºC), **A**, **B** and **D** parameters are stimated. As you can get with [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html). But if it use four pairs of them (Resistence of NTC, Temperature ºC), **A**, **B**, **C** and **D** parameters are stimated.
+When it is used the Constructors above the library calc **A**, **B**, **C**, **D**, **BETA** and **NTC_25C** parameters. So, it can use any function to get the temperature. When use three pair of values (Resistance of NTC, Temperature ºC), **A**, **B** and **D** parameters are estimated. As you can get with [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html). But if it use four pairs of them (Resistance of NTC, Temperature ºC), **A**, **B**, **C** and **D** parameters are estimated.
 
 ### Unknow coefficients whith 3 measures of Resistence and Temperature ###
 
@@ -368,10 +368,12 @@ When it is used the Constructors above the library calc **A**, **B**, **C**, **D
 <img src="img/coefficients_solution_3.png" alt="Coefficients solution A,B,D parameters" width=40%>
 </p>
 
+You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html) or solving the system of equations above. For this, there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
+
 ### Unknow coefficients whith 4 measures of Resistence and Temperature ###
 
 <p align=center>
-<img src="img/coefficients_ecuations_4.png" alt="Coefficients ecuations" width=40%>
+<img src="img/coefficients_ecuations_4.png" alt="Coefficients equations" width=40%>
 </p>
 
 <p align=center>
@@ -388,7 +390,7 @@ This file is part of ThermistorNTC Library.
 
 ThermistorNTC Library is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-ThermistorNTC lLibrary is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ThermistorNTC Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with ThermistorNTC Library.  If not, see <https://www.gnu.org/licenses/>.
 
