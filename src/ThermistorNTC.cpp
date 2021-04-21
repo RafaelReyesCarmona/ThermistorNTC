@@ -128,12 +128,6 @@ Thermistor::Thermistor(int PIN,
 void Thermistor::SteinhartHart(Thermistor_connection ConType){
   float E = log(calcNTC(ConType));
   _temp_k = _A + (_B*E) + (_C*(E*E)) + (_D*(E*E*E));
-  Serial.print("\n");
-  Serial.println(_A,10 );
-  Serial.println(_B,12 );
-  Serial.println(_C,12 );
-  Serial.println(_D,15 );
-  Serial.println(_NTC_25C,1 );
   _temp_k = 1.0 / _temp_k;
   _temp_c = _temp_k - 273.15;
 }
@@ -301,8 +295,8 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
 
   float L1_2 = L1*L1;
   float L2_2 = L2*L2;
-  float L3_2 = L2*L2;
-  float L4_2 = L2*L2;
+  float L3_2 = L3*L3;
+  float L4_2 = L4*L4;
   float L1_3 = L1*L1_2;
   float L2_3 = L2*L2_2;
   float L3_3 = L3*L3_2;
@@ -312,39 +306,29 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
   float Y3 = 1.0f / (_T3);
   float Y4 = 1.0f / (_T4);
 
-  double ADjun = (L2*L3_2*L4_3)+(L3*L4_2*L2_3)+(L4*L2_2*L3_3)-(L4*L3_2*L2_3)-(L3*L2_2*L4_3)-(L2*L4_2*L3_3);
-  double DS = ADjun;
-  double DA = Y1 * ADjun;
-  ADjun = ((L1*L3_2*L4_3)+(L3*L4_2*L1_3)+(L4*L1_2*L3_3)-(L4*L3_2*L1_3)-(L3*L1_2*L4_3)-(L1*L4_2*L3_3));
-  DS -=  ADjun;
-  DA -= Y2 * ADjun;
-  ADjun = (L1*L2_2*L4_3)+(L2*L4_2*L1_3)+(L4*L1_2*L2_3)-(L4*L2_2*L1_3)-(L2*L1_2*L4_3)-(L1*L4_2*L2_3);
-  DS +=  ADjun;
-  DA += Y3 * ADjun;
-  ADjun = ((L1*L2_2*L3_3)+(L2*L3_2*L1_3)+(L3*L1_2*L2_3)-(L3*L2_2*L1_3)-(L2*L1_2*L3_3)-(L1*L3_2*L2_3));
-  DS -= ADjun;
-  DA -= Y4 * ADjun;
+ /*
+  double L2_L1 = L2 - L1;
+  double yy2 = (L2_2 - L1_2) / L2_L1;
+  double yY3 = ((L3_2 - L1_2) / (L3 - L1)) - yy2;
+  double yY4 = ((L4_2 - L1_2) / (L4 - L1)) - yy2;
 
-  double DB = -(Y1) * ((L3_2*L4_3)+(L4_2*L2_3)+(L2_2*L3_3)-(L3_2*L2_3)-(L2_2*L4_3)-(L4_2*L3_3));
-  DB += (Y2 * ((L3_2*L4_3)+(L4_2*L1_3)+(L1_2*L3_3)-(L3_2*L1_3)-(L1_2*L4_3)-(L4_2*L3_3)));
-  DB -= (Y3 * ((L2_2*L4_3)+(L4_2*L1_3)+(L1_2*L2_3)-(L2_2*L1_3)-(L1_2*L4_3)-(L4_2*L2_3)));
-  DB += (Y4 * ((L2_2*L3_3)+(L3_2*L1_3)+(L1_2*L2_3)-(L2_2*L1_3)-(L1_2*L3_3)-(L3_2*L2_3)));
+  double Dd3 = (((L3_3 - L1_3) / (L3 - L1)) - ((L2_3 - L1_3) / L2_L1)) / yY3;
+  double Dd4 = (((L4_3 - L1_3) / (L4 - L1)) - ((L2_3 - L1_3) / L2_L1)) / yY4;
+  double Dy3 = (((Y3 - Y1) / (L3 - L1) - yy2) / yY3);
+  double Dy4 = (((Y4 - Y1) / (L4 - L1) - yy2) / yY4);
 
-  double DC = Y1 * ((L3*L4_3)+(L4*L2_3)+(L2*L3_3)-(L3*L2_3)-(L2*L4_3)-(L4*L3_3));
-  DC -= (Y2 * ((L3*L4_3)+(L4*L1_3)+(L1*L3_3)-(L3*L1_3)-(L1*L4_3)-(L4*L3_3)));
-  DC += (Y3 * ((L2*L4_3)+(L4*L1_3)+(L1*L2_3)-(L2*L1_3)-(L1*L4_3)-(L4*L2_3)));
-  DC -= (Y4 * ((L2*L3_3)+(L3*L1_3)+(L1*L2_3)-(L2*L1_3)-(L1*L3_3)-(L3*L2_3)));
+  _D = (Dy4 - Dy3) / (Dd4 - Dd3);
+  _C = Dy3 - (Dd3 * _D);
 
-  double DD = -(Y1) * ((L3*L4_2)+(L4*L2_2)+(L2*L3_2)-(L3*L2_2)-(L2*L4_2)-(L4*L3_2));
-  DD += (Y2 * ((L3*L4_2)+(L4*L1_2)+(L1*L3_2)-(L3*L1_2)-(L1*L4_2)-(L4*L3_2)));
-  DD -= (Y3 * ((L2*L4_2)+(L4*L1_2)+(L1*L2_2)-(L2*L1_2)-(L1*L4_2)-(L4*L2_2)));
-  DD += (Y4 * ((L2*L3_2)+(L3*L1_2)+(L1*L2_2)-(L2*L1_2)-(L1*L3_2)-(L3*L2_2)));
+  double Z1 = Y1 - (_C * L1_2) - (_D * L1_3);
+  double Z2 = Y2 - (_C * L2_2) - (_D * L2_3);
 
-  _D = DD / DS;
-  _C = DC / DS;
-  _B = DB / DS;
-  _A = DA / DS;
-/*
+  _A = (Z1 * L2) - (Z2 * L1);
+  _A /= L2_L1;
+  _B = Z2 - Z1;
+  _B /= L2_L1;
+  */
+//  /*
   float L2_L1 = L2 - L1;
   float L3_L1 = L3 - L1;
   float L4_L1 = L4 - L1;
@@ -370,7 +354,7 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
   _A /= L2_L1;
   _B = Z2 - Z1;
   _B /= L2_L1;
-*/
+//  */
 }
 
 

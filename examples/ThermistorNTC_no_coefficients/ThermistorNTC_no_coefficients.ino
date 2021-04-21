@@ -30,39 +30,49 @@ rafael.reyes.carmona@gmail.com
  * Example sketch for the ThermistorNTC library.
  */
 
-#include <ThermistorNTC.h>
+ #include <ThermistorNTC.h>
 
-Thermistor thermistor1(/* PIN */       A1,
-                      /* RESISTOR */  22170L,
-                      /* NTC 25ºC */  91869L,
-                      /* BETA */      4403.45,
-                      /* Vref */      4.97);
+ Thermistor thermistor1(/* PIN */       A1,
+                       /* RESISTOR */  22170L,
+                       /* NTC 25ºC */  91869L,
+                       /* BETA */      4403.45,
+                       /* Vref */      5.072);
 
-Thermistor thermistor2(/* PIN */      A2,
-                      /* RESISTOR */  22170L,
-                      /* NTC_T1 */    355000L,
-                      /* T1 (ºC) */   0.0,  // 273,15 ºK
-                      /* NTC_T2 */    79300L,
-                      /* T1 (ºC) */   28.0, // 301,15 ºK
-                      /* NTC_T3 */    58300L,
-                      /* T1 (ºC) */   35.0, // 308,15 ºK
-                      /* Vref */      4.97);
+ Thermistor thermistor2(/* PIN */      A2,
+                       /* RESISTOR */  22170L,
+                       /* NTC_T1 */    355000L,
+                       /* T1 (ºC) */   0.0,  // 273,15 ºK
+                       /* NTC_T2 */    157500L,
+                       /* T2 (ºC) */   14.0, // 287,15 ºK
+                       /* NTC_T2 */    79300L,
+                       /* T1 (ºC) */   28.0, // 301,15 ºK
+                       /* NTC_T3 */    58300L,
+                       /* T1 (ºC) */   35.0, // 308,15 ºK
+                       /* Vref */      5.072);
 
-void setup(void)
-{
-  Serial.begin(57600);
-}
+ void setup(void)
+ {
+   Serial.begin(57600);
+ }
 
 
-void loop(void)
-{
-  double sensor1 = thermistor1.fastTempCelsius();
-  Serial.print("Sensor1 calc. Temp(ºC): ");
-  Serial.print(sensor1);
+ void loop(void)
+ {
+   double sensor1 = thermistor1.fastTempCelsius();
+   Serial.print("Sensor1 calc. Temp(ºC): ");
+   Serial.println(sensor1);
 
-  double sensor2 = thermistor2.getTempCelsius_SteinHart();
-  Serial.print(",Sensor2 calc. Temp(ºC): ");
-  Serial.println(sensor2);
+   double sensor2 = thermistor2.getTempCelsius_SteinHart();
+   Serial.print("Sensor2 calc. SteinHart Temp(ºC): ");
+   Serial.println(sensor2);
 
-  delay(1000);  // Comment for serial plotter.
-}
+   sensor2 = thermistor2.getTempCelsius();
+   Serial.print("Sensor2 calc. Beta equ. Temp(ºC): ");
+   Serial.println(sensor2);
+
+   sensor2 = thermistor2.fastTempCelsius();
+   Serial.print("Sensor2 calc. Fast equ. Temp(ºC): ");
+   Serial.println(sensor2);
+   Serial.println();
+   delay(1000);  // Comment for serial plotter.
+ }
