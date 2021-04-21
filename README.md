@@ -231,6 +231,18 @@ Thermistor::Thermistor(int PIN,
                        long NTC_3,
                        float TEMP_3,
                        float VREF)
+
+Thermistor::Thermistor(int PIN,
+                       long RESISTOR,
+                       long NTC_1,
+                       float TEMP_1,
+                       long NTC_2,
+                       float TEMP_2,
+                       long NTC_3,
+                       float TEMP_3,
+                       long NTC_4,
+                       float TEMP_4,
+                       float VREF)
 ```
 Where:
 * **PIN** - Analog port for get ADC (analogRead() function)
@@ -239,8 +251,8 @@ Where:
 * **A**, **B**, **C**, **D** - NTC Thermistor coefficients
 * **BETA** - Beta coefficient of NTC thermistor.
 * **VREF** - Voltage aplied to voltage divisor (usually VCC.)
-* **NTC_1**, **NTC_2**, **NTC_3** - Resistance value of NTC thermistor at differents temperatures.
-* **TEMP_1**, **TEMP_2**, **TEMP_3** - Temperature value in (ºC). Must TEMP_1 < TEMP_2 < TEMP_3. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
+* **NTC_1**, **NTC_2**, **NTC_3**, **NTC_4** - Resistance value of NTC thermistor at differents temperatures.
+* **TEMP_1**, **TEMP_2**, **TEMP_3**, **TEMP_4** - Temperature value in (ºC). Must TEMP_1 < TEMP_2 < TEMP_3. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
 
 ### Functions implamented ###
 ```c++
@@ -254,7 +266,17 @@ double getTempFahrenheit(Thermistor_connection ConType);
 double fastTempKelvin(Thermistor_connection ConType);
 double fastTempCelsius(Thermistor_connection ConType);
 double fastTempFahrenheit(Thermistor_connection ConType);
+
+double getTempKelvin_SteinHart(Thermistor_connection ConType);
+double getTempCelsius_SteinHart(Thermistor_connection ConType);
+double getTempFahrenheit_SteinHart(Thermistor_connection ConType);
 ```
+* **setADC** - Set maximal value of ADC. For 10-bits ADC resolution, will be 2^10 = 1024. For 12-bits ADC resolution, the value will be 2^12 = 4096. Library autodetect for Atmega328, ATmega168 and LGT8F328P.
+* **setEMA** - Set value for EMA Filter ADC readings. Default is 0,91. The library gets 15 values from ADC port at maximal resolution every time it is called for stimate the temperature. It is returned the value filtred with EMA with formula:
+
+* **getTemp...** Return the temperature in the respective range using Beta equation.
+* **fastTemp...** Return the temperature in the respective range using Fast equation. More fast than the other methods. It is used beta parameter.
+* **getTemp..._Steinhart** Return the temperature in the respective range using Steinhart-Hart equation.
 
 ### Simple Example ###
 
@@ -284,11 +306,11 @@ void setup(void)
 
 void loop(void)
 {
-  double sensor0 = thermistor0.getTempCelsius(VCC);
+  double sensor0 = thermistor0.getTempCelsius_SteinHart(VCC);
   Serial.print("Sensor0 - Temp(ºC): ");
   Serial.println(sensor0);
 
-  double sensor1 = thermistor1.getTempCelsius();
+  double sensor1 = thermistor1.getTempCelsius(); // VCC default if not expresed.
   Serial.print("Sensor1 - Temp(ºC): ");
   Serial.println(sensor1);
 
@@ -303,29 +325,61 @@ void loop(void)
 ## Thermistor with unknowns coefficients ##
 
 ```c++
+Thermistor thermistor1(/* PIN */      A1,
+                      /* RESISTOR */  22170L,
+                      /* NTC_T1 */    355000L,
+                      /* T1 (ºC) */   0.0,  // 273,15 ºK
+                      /* NTC_T2 */    157500L,
+                      /* T1 (ºC) */   28.0, // 301,15 ºK
+                      /* NTC_T3 */    58300L,
+                      /* T1 (ºC) */   35.0, // 308,15 ºK
+                      /* Vref */      5.072);
+```
+Or:
+```c++
 Thermistor thermistor2(/* PIN */      A2,
                       /* RESISTOR */  22170L,
                       /* NTC_T1 */    355000L,
-                      /* T1 (ºC) */   0.0,
-                      /* NTC_T2 */    79300L,
-                      /* T1 (ºC) */   28.0,
-                      /* NTC_T3 */    58300L,
-                      /* T1 (ºC) */   35.0,
-                      /* Vref */      4.97);
+                      /* T1 (ºC) */   0.0,  // 273,15 ºK
+                      /* NTC_T2 */    157500L,
+                      /* T2 (ºC) */   14.0, // 287,15 ºK
+                      /* NTC_T3 */    79300L,
+                      /* T3 (ºC) */   28.0, // 301,15 ºK
+                      /* NTC_T4 */    58300L,
+                      /* T4 (ºC) */   35.0, // 308,15 ºK
+                      /* Vref */      5.072);
 ```
 
-When the coefficients are unknowns, It can use the above Constructor. The library calculate all the coefficients. It can use although getTemp... and fastTemp... Functions. It must measure the thermistor resistance at three different temperatures. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
+When the coefficients are unknowns, It can use the above Constructor. The library calculate all the coefficients. It can use although getTemp... and fastTemp... Functions. It must measure the thermistor resistance at three or four different temperatures. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
+
+When it is used the Constructors above the library calc **A**, **B**, **C**, **D**, **BETA** and **NTC_25C** parameters. So, it can use any function to get the temperature. When use three pair of values (Resistence of NTC, Temperature ºC), **A**, **B** and **D** parameters are stimated. As you can get with [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html). But if it use four pairs of them (Resistence of NTC, Temperature ºC), **A**, **B**, **C** and **D** parameters are stimated.
+
+### Unknow coefficients whith 3 measures of Resistence and Temperature ###
 
 <p align=center>
-<img src="img/coefficients_ecuations.png" alt="Coefficients ecuations" width=40%>
+<img src="img/coefficients_ecuations_3.png" alt="Coefficients ecuations" width=40%>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solve.png" alt="Coefficients how to solve" width=40%>
+<img src="img/coefficients_solve_3.png" alt="Coefficients how to solve" width=40%>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution.png" alt="Coefficients solution A,B,D parameters" width=40%>
+<img src="img/coefficients_solution_3.png" alt="Coefficients solution A,B,D parameters" width=40%>
+</p>
+
+### Unknow coefficients whith 4 measures of Resistence and Temperature ###
+
+<p align=center>
+<img src="img/coefficients_ecuations_4.png" alt="Coefficients ecuations" width=40%>
+</p>
+
+<p align=center>
+<img src="img/coefficients_solve_4.png" alt="Coefficients how to solve" width=40%>
+</p>
+
+<p align=center>
+<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,D parameters" width=40%>
 </p>
 
 ## License ##

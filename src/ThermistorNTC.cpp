@@ -207,7 +207,7 @@ float Thermistor::getADC(int numsamples){
   int microdelay;
 
   microdelay = (1 <<((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0)));
-  microdelay = microdelay * 1000000 / F_CPU;
+  microdelay = microdelay * 2000000 / F_CPU;
 
   EMA_LOW = analogRead(_PIN);
 
