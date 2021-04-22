@@ -129,7 +129,7 @@ Where:
 
 How to Calc beta of NTC Thermistor, you can [see this page.](https://www.ametherm.com/thermistor/ntc-thermistor-beta)
 
-<p align=center><img src="img/Screenshot_20210307_012630.jpg" alt="Thermistor Calculator" width=60%>
+<p align=center><img src="img/Screenshot_20210307_012630.jpg" alt="Thermistor Calculator" width=60%></p>
 
 Using the [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html)
 you can de termine the unknowns parameters of a thermistor.
