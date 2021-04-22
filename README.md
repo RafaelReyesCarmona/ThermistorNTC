@@ -381,8 +381,10 @@ You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,D parameters" width=40%>
+<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,C,D parameters" width=40%>
 </p>
+
+To get **A**, **B**,**C** and **D** parameters there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
 
 ## License ##
 
