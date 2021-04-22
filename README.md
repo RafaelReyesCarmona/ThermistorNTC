@@ -221,7 +221,7 @@ Thermistor::Thermistor(int PIN,
                        float BETA,
                        float VREF)
 
-// Constructor for unknowns thermistor parameters.
+// Constructor for unknowns thermistor parameters. (3 measures)
 Thermistor::Thermistor(int PIN,
                        long RESISTOR,
                        long NTC_1,
@@ -231,7 +231,7 @@ Thermistor::Thermistor(int PIN,
                        long NTC_3,
                        float TEMP_3,
                        float VREF)
-
+// Constructor for unknowns thermistor parameters. (4 measures)
 Thermistor::Thermistor(int PIN,
                        long RESISTOR,
                        long NTC_1,
@@ -252,7 +252,7 @@ Where:
 * **BETA** - Beta coefficient of NTC thermistor.
 * **VREF** - Voltage aplied to voltage divisor (usually VCC.)
 * **NTC_1**, **NTC_2**, **NTC_3**, **NTC_4** - Resistance value of NTC thermistor at differents temperatures.
-* **TEMP_1**, **TEMP_2**, **TEMP_3**, **TEMP_4** - Temperature value in (ºC). Must TEMP_1 < TEMP_2 < TEMP_3. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
+* **TEMP_1**, **TEMP_2**, **TEMP_3**, **TEMP_4** - Temperature value in (ºC). Meassures of Temperature should be TEMP_1 < TEMP_2 < TEMP_3 < TEMP_4, for get better estimated values, but not mandatory. The temperatures should be evenly spaced and at least 10 degrees apart for better results.
 
 ### Functions implamented ###
 ```c++
@@ -272,7 +272,7 @@ double getTempCelsius_SteinHart(Thermistor_connection ConType);
 double getTempFahrenheit_SteinHart(Thermistor_connection ConType);
 ```
 * **setADC** - Set maximal value of ADC. For 10-bits ADC resolution, will be 2^10 = 1024. For 12-bits ADC resolution, the value will be 2^12 = 4096. Library autodetect for Atmega328, ATmega168 and LGT8F328P.
-* **setEMA** - Set value for EMA Filter ADC readings. Default is 0,91. The library gets 15 values from ADC port at maximal resolution every time it is called for estimated the temperature. It is returned the value filtered with EMA with formula:
+* **setEMA** - Set value for EMA Filter ADC readings. Default is 0,91. The library gets 15 values from ADC port at maximal resolution every time it is called for estimated the temperature. It is returned the value filtered with EMA with formula: y[n] = \alpha·x[n]+(1-\alpha)·y[n-1]. For more info about EMA (Exponential Moving Average) see [Exponential Moving Average](https://tttapa.github.io/Pages/Mathematics/Systems-and-Control-Theory/Digital-filters/Exponential%20Moving%20Average/Exponential-Moving-Average.html), and  how to implement it [EMA C++ Implementation](https://tttapa.github.io/Pages/Mathematics/Systems-and-Control-Theory/Digital-filters/Exponential%20Moving%20Average/C++Implementation.html).
 
 * **getTemp...** Return the temperature in the respective range using Beta equation.
 * **fastTemp...** Return the temperature in the respective range using Fast equation. More fast than the other methods. It is used beta parameter.
@@ -373,15 +373,15 @@ You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](
 ### Unknow coefficients whith 4 measures of Resistence and Temperature ###
 
 <p align=center>
-<img src="img/coefficients_ecuations_4.png" alt="Coefficients equations" width=40%>
+<img src="img/coefficients_ecuations_4.png" alt="Coefficients equations" width=60%>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solve_4.png" alt="Coefficients how to solve" width=40%>
+<img src="img/coefficients_solve_4.png" alt="Coefficients how to solve" width=50%>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,C,D parameters" width=40%>
+<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,C,D parameters" width=60%>
 </p>
 
 To get **A**, **B**,**C** and **D** parameters there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
