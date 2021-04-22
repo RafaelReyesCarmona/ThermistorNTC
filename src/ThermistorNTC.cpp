@@ -337,8 +337,8 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
   double DS1_2 = (L4_3-L1_3) * L2_L1 - (L2_3-L1_3) * L4_L1;
   double DS2_1 = (L4_2-L1_2) * L2_L1 - (L2_2-L1_2) * L4_L1;
   double DS2_2 = (L3_3-L1_3) * L2_L1 - (L2_3-L1_3) * L3_L1;
-  double DY1 = (Y3-Y1) * (L2-L1) - (Y2-Y1) * (L3-L1);
-  double DY2 = (Y4-Y1) * (L2-L1) - (Y2-Y1) * (L4-L1);
+  double DY1 = (Y3-Y1) * L2_L1 - (Y2-Y1) * L3_L1;
+  double DY2 = (Y4-Y1) * L2_L1 - (Y2-Y1) * L4_L1;
 
   double DS = (DS1_1 * DS1_2) - (DS2_1 * DS2_2);
   double DC = (DY1 * DS1_2) - (DY2 * DS2_2);
