@@ -1,4 +1,4 @@
-<img src="img/thermometer.png" width=48 height=48 align=right>
+<img src="img/thermometer.png" width=48 height=48 align="right">
 
 # ThermistorNTC library #
 
@@ -20,13 +20,13 @@ The Steinhart-Hart equation is the most widely used tool to interpolate
 the NTC thermistor resistance/temperature curve. It is a third order
 polynomial ecuation which provides very good curve fitting.
 
-<img src="img/Steinhart-Hart_4.png" alt="Steinhart-Hart_4" width=800 align=center>
+<img src="img/Steinhart-Hart_4.png" alt="Steinhart-Hart_4" width=600>
 
 In the standard Steinhart-Hart equation the C parameter is set to zero.
 However, some manufacturers use all 4 coefficients. So we can use standard Steinhart-Hart
 ecuation with 3 coefficients.
 
-<p align=center><img src="img/Steinhart-Hart_3.png" alt="Steinhart-Hart_3" width=50%></p>
+<img src="img/Steinhart-Hart_3.png" alt="Steinhart-Hart_3" width=400>
 
 where:
 * **T** is the temperature (in kelvins),
@@ -38,7 +38,7 @@ These can usually be found in the data sheet.
 
 Other form of the equation is the use of B (beta) parameter
 
-<p align=center><img src="img/Steinhart-Hart_beta.png" alt="Steinhart-Hart_beta" width=30%></p>
+<img src="img/Steinhart-Hart_beta.png" alt="Steinhart-Hart_beta" width=300 align=right>
 
 where:
 * **T** is the temperature (in kelvins)
@@ -54,7 +54,7 @@ See this document for more information. ["Comments on the Steinhart–Hart Equat
 
 The most general form of the equation can be derived from extending the B parameter equation to an infinite series:
 
-<p align=center><img src="img/Steinhart-Hart_beta-dev.png" alt="Steinhart-Hart_beta-dev" width=40%></p>
+<img src="img/Steinhart-Hart_beta-dev.png" alt="Steinhart-Hart_beta-dev" width=400>
 
 You can get more information in this document:
 Matus, Michael (October 2011).
@@ -79,11 +79,11 @@ More information:
 
 In this library, it is take the beta ecuation and calculate temperature of the thermistor from it.
 
-<p align=center><img src="img/FastCalc_howto.png" alt="1/T=(beta + T0 * ln(R/NTC)/(beta * T0)" width=30%></p>
+<img src="img/FastCalc_howto.png" alt="1/T=(beta + T0 * ln(R/NTC)/(beta * T0)" width=300>
 
 So we can solve using this formula:
 
-<p align=center><img src="img/FastCalc.png" alt="T=(beta * T0) / (beta + T0 * ln(R/NTC))" width=30%></p>
+<img src="img/FastCalc.png" alt="T=(beta * T0) / (beta + T0 * ln(R/NTC))" width=300 align=right>
 
 where:
 * **T** is the temperature (in kelvins)
@@ -99,19 +99,19 @@ board used. Tested on LGT8F328P-SOPP, LGT8F328P-QF32 and Arduino pro mini boards
 If it is compared Fast Calc with Steinhart-Hart three orden equation,
 it is 35-44% faster, depends on microcontroller used. See example for test.
 
-<p align=center><img src="img/Test1.jpg" alt="Test1 picture"></p>
+<img src="img/Test1.jpg" alt="Test1 picture">
 
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** Fast Calc equation. LGT8F328P-SOPP board. (32 MHz 5v.)
 
-<p align=center><img src="img/Test2.jpg" alt="Test2 picture"></p>
+<img src="img/Test2.jpg" alt="Test2 picture">
 
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. LGT8F328P-QF32 board. (32 MHz 5v.)
 
-<p align=center><img src="img/Test3.jpg" alt="Test2 picture"></p>
+<img src="img/Test3.jpg" alt="Test2 picture">
 
 Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. Atmega328p board. (16 MHz 5v.)
 
-<p align=center><img src="img/screenshot_arduinoProMini16Mhz5v.png" alt="Test 3 with sensors" width=70%></p>
+<img src="img/screenshot_arduinoProMini16Mhz5v.png" alt="Test 3 with sensors" width=500>
 
 Testing with 100k thermistors and 22kohms. Testing **sensor0** Steinhart-Hart three orden equation, **sensor1** beta equation and **sensor1_fast** Fast Calc equation. Atmega328p board. (16 MHz 5v.)
 
