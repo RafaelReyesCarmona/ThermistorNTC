@@ -79,10 +79,11 @@ More information:
 
 In this library, it is take the beta ecuation and calculate temperature of the thermistor from it.
 
+<p align=center>
 <img src="img/FastCalc_howto.png" alt="1/T=(beta + T0 * ln(R/NTC)/(beta * T0)" width=300>
+</p>
 
 So we can solve using this formula:
-
 <img src="img/FastCalc.png" alt="T=(beta * T0) / (beta + T0 * ln(R/NTC))" width=300 align=right>
 
 where:
@@ -119,7 +120,9 @@ Testing with 100k thermistors and 22kohms. Testing **sensor0** Steinhart-Hart th
 
 Beta is measured in degrees Kelvin (K) and is computed based on this equation:
 
-<p align=center><img src="img/Beta.png" alt="b=ln(Rt1/Rt2) / ((1/T1)-(1/T2))" width=27%></p>
+<p align=center>
+<img src="img/Beta.png" alt="b=ln(Rt1/Rt2) / ((1/T1)-(1/T2))" width=250>
+</p>
 
 Where:
 * **Rt1** = Resistance at Temperature 1 (ohms)
@@ -129,7 +132,7 @@ Where:
 
 How to Calc beta of NTC Thermistor, you can [see this page.](https://www.ametherm.com/thermistor/ntc-thermistor-beta)
 
-<p align=center><img src="img/Screenshot_20210307_012630.jpg" alt="Thermistor Calculator" width=60%></p>
+<img src="img/Screenshot_20210307_012630.jpg" alt="Thermistor Calculator" width=600>
 
 Using the [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html)
 you can de termine the unknowns parameters of a thermistor.
