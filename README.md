@@ -20,13 +20,17 @@ The Steinhart-Hart equation is the most widely used tool to interpolate
 the NTC thermistor resistance/temperature curve. It is a third order
 polynomial ecuation which provides very good curve fitting.
 
+<p align=center>
 <img src="img/Steinhart-Hart_4.png" alt="Steinhart-Hart_4" width=600>
+</p>
 
 In the standard Steinhart-Hart equation the C parameter is set to zero.
 However, some manufacturers use all 4 coefficients. So we can use standard Steinhart-Hart
 ecuation with 3 coefficients.
 
+<p align=center>
 <img src="img/Steinhart-Hart_3.png" alt="Steinhart-Hart_3" width=400>
+</p>
 
 where:
 * **T** is the temperature (in kelvins),
@@ -38,7 +42,9 @@ These can usually be found in the data sheet.
 
 Other form of the equation is the use of B (beta) parameter
 
+<p align=center>
 <img src="img/Steinhart-Hart_beta.png" alt="Steinhart-Hart_beta" width=300 align=right>
+</p>
 
 where:
 * **T** is the temperature (in kelvins)
@@ -54,7 +60,9 @@ See this document for more information. ["Comments on the Steinhart–Hart Equat
 
 The most general form of the equation can be derived from extending the B parameter equation to an infinite series:
 
+<p align=center>
 <img src="img/Steinhart-Hart_beta-dev.png" alt="Steinhart-Hart_beta-dev" width=400>
+</p>
 
 You can get more information in this document:
 Matus, Michael (October 2011).
@@ -351,15 +359,15 @@ When it is used the Constructors above the library calc **A**, **B**, **C**, **D
 ### Unknow coefficients whith 3 measures of Resistence and Temperature ###
 
 <p align=center>
-<img src="img/coefficients_ecuations_3.png" alt="Coefficients ecuations" width=40%>
+<img src="img/coefficients_ecuations_3.png" alt="Coefficients ecuations" width=300>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solve_3.png" alt="Coefficients how to solve" width=40%>
+<img src="img/coefficients_solve_3.png" alt="Coefficients how to solve" width=300>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution_3.png" alt="Coefficients solution A,B,D parameters" width=40%>
+<img src="img/coefficients_solution_3.png" alt="Coefficients solution A,B,D parameters" width=300>
 </p>
 
 You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html) or solving the system of equations above. For this, there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
@@ -367,15 +375,15 @@ You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](
 ### Unknow coefficients whith 4 measures of Resistence and Temperature ###
 
 <p align=center>
-<img src="img/coefficients_ecuations_4.png" alt="Coefficients equations" width=60%>
+<img src="img/coefficients_ecuations_4.png" alt="Coefficients equations" width=300>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solve_4.png" alt="Coefficients how to solve" width=50%>
+<img src="img/coefficients_solve_4.png" alt="Coefficients how to solve" width=300>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,C,D parameters" width=60%>
+<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,C,D parameters" width=300>
 </p>
 
 To get **A**, **B**,**C** and **D** parameters there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
