@@ -367,7 +367,7 @@ When it is used the Constructors above the library calc **A**, **B**, **C**, **D
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution_3.png" alt="Coefficients solution A,B,D parameters" width=300>
+<img src="img/coefficients_solution_3.png" alt="Coefficients solution A,B,D parameters" width=400>
 </p>
 
 You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html) or solving the system of equations above. For this, there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
@@ -375,15 +375,15 @@ You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](
 ### Unknow coefficients whith 4 measures of Resistence and Temperature ###
 
 <p align=center>
-<img src="img/coefficients_ecuations_4.png" alt="Coefficients equations" width=300>
+<img src="img/coefficients_ecuations_4.png" alt="Coefficients equations" width=400>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solve_4.png" alt="Coefficients how to solve" width=300>
+<img src="img/coefficients_solve_4.png" alt="Coefficients how to solve" width=400>
 </p>
 
 <p align=center>
-<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,C,D parameters" width=300>
+<img src="img/coefficients_solution_4.png" alt="Coefficients solution A,B,C,D parameters" width=500>
 </p>
 
 To get **A**, **B**,**C** and **D** parameters there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
