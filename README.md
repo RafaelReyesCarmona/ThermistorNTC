@@ -183,13 +183,11 @@ http://www.arduino.cc/en/Reference/Libraries
 <p align=center>
 <img src="img/Download_latest.png" alt="Download latest version of library" width=700>
 </p>
-![]()
 
 2. In the Arduino IDE, choose Sketch/Include Library/Add Zip Library.
 <p align=center>
 <img src="img/Add_library.png" alt="Add library Arduino IDE" width=700>
 </p>
-
 
 3. Navigate to the ZIP file, and click Open.
 
