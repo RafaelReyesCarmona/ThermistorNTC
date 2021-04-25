@@ -177,7 +177,39 @@ For a tutorial on how to install new libraries for use with the Arduino
 development environment please refer to the following website:
 http://www.arduino.cc/en/Reference/Libraries
 
+--- or ---
+
+1. Download the ZIP file from the page [releases](https://github.com/RafaelReyesCarmona/ThermistorNTC/releases) to your machine.
+<p align=center>
+<img src="img/Download_latest.png" alt="Download latest version of library" width=700>
+</p>
+![]()
+
+2. In the Arduino IDE, choose Sketch/Include Library/Add Zip Library.
+<p align=center>
+<img src="img/Add_library.png" alt="Add library Arduino IDE" width=700>
+</p>
+
+
+3. Navigate to the ZIP file, and click Open.
+
 ## How to use the library ##
+
+In Arduino IDE, Choose Sketch/Include Library/Scroll and select "ThermistorNTC".
+<p align=center>
+<img src="img/Using_library_1.png" alt="Using ThermistorNTC library in Arduino IDE" width=700>
+</p>
+
+There are a two examples files with the library. In the Arduino IDE, choose File/Examples/ThermistorNTC, and you can see "ThermistorNTC" and "ThermistorNTC_no_coefficients".
+
+<p align=center>
+<img src="img/Arduino_examples.png" alt="Examples files" width=700>
+</p>
+
+--- or ---
+
+See the example code in section [Simple example](https://github.com/RafaelReyesCarmona/ThermistorNTC#simple-example) above.
+
 The library implement the type:
 ```c++
 enum Thermistor_connection {
@@ -274,7 +306,7 @@ double getTempCelsius_SteinHart(Thermistor_connection ConType);
 double getTempFahrenheit_SteinHart(Thermistor_connection ConType);
 ```
 * **setADC** - Set maximal value of ADC. For 10-bits ADC resolution, will be 2^10 = 1024. For 12-bits ADC resolution, the value will be 2^12 = 4096. Library autodetect for Atmega328, ATmega168 and LGT8F328P.
-* **setEMA** - Set value for EMA Filter ADC readings. Default is 0,91. The library gets 15 values from ADC port at maximal resolution every time it is called for estimated the temperature. It is used the EMA filtered ADC value with formula: y[n] = \alpha·x[n]+(1-\alpha)·y[n-1], to estimate the temperature. For more info about EMA (Exponential Moving Average) see [Exponential Moving Average](https://tttapa.github.io/Pages/Mathematics/Systems-and-Control-Theory/Digital-filters/Exponential%20Moving%20Average/Exponential-Moving-Average.html), and  how to implement it [EMA C++ Implementation](https://tttapa.github.io/Pages/Mathematics/Systems-and-Control-Theory/Digital-filters/Exponential%20Moving%20Average/C++Implementation.html).
+* **setEMA** - Set value for EMA Filter ADC readings. Default is 0,91. The library gets 15 values from ADC port at maximal resolution every time it is called for estimated the temperature. It is used the EMA filtered ADC value with formula: **Y[n] = alpha * X[n] + (1 - alpha) * Y[n-1]**, to estimate the temperature. For more info about EMA (Exponential Moving Average) see [Exponential Moving Average](https://tttapa.github.io/Pages/Mathematics/Systems-and-Control-Theory/Digital-filters/Exponential%20Moving%20Average/Exponential-Moving-Average.html), and  how to implement it [EMA C++ Implementation](https://tttapa.github.io/Pages/Mathematics/Systems-and-Control-Theory/Digital-filters/Exponential%20Moving%20Average/C++Implementation.html).
 
 * **getTemp...** Return the temperature in the respective range using Beta equation.
 * **fastTemp...** Return the temperature in the respective range using Fast equation. More fast than the other methods. It is used beta parameter.
