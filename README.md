@@ -409,5 +409,5 @@ This proyect began as a fork of SteinhartHart work by [Andreas Tacke](https://gi
 
 ## Credits ##
 
-Celsius icon at the beginning is from [Flaticon.es](https://www.flaticon.es) designed by [Those Icons](https://www.flaticon.es/autores/those-icons)
-and licensed by [free license](img/licencia-37862535_thermometer.pdf).
+Thermometer icon at the beginning is from [Flaticon.es](https://www.flaticon.es) designed by [Those Icons](https://www.flaticon.es/autores/those-icons)
+and licensed by [free license](img/license-37862535_thermometer.pdf).
