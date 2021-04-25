@@ -181,12 +181,12 @@ http://www.arduino.cc/en/Reference/Libraries
 
 1. Download the ZIP file from the page [releases](https://github.com/RafaelReyesCarmona/ThermistorNTC/releases) to your machine.
 <p align=center>
-<img src="img/Download_latest.png" alt="Download latest version of library" width=700>
+<img src="img/Download_latest.png" alt="Download latest version of library" width=600>
 </p>
 
 2. In the Arduino IDE, choose Sketch/Include Library/Add Zip Library.
 <p align=center>
-<img src="img/Add_library.png" alt="Add library Arduino IDE" width=700>
+<img src="img/Add_library.png" alt="Add library Arduino IDE" width=600>
 </p>
 
 3. Navigate to the ZIP file, and click Open.
@@ -195,13 +195,13 @@ http://www.arduino.cc/en/Reference/Libraries
 
 In Arduino IDE, Choose Sketch/Include Library/Scroll and select "ThermistorNTC".
 <p align=center>
-<img src="img/Using_library_1.png" alt="Using ThermistorNTC library in Arduino IDE" width=700>
+<img src="img/Using_library_1.png" alt="Using ThermistorNTC library in Arduino IDE" width=600>
 </p>
 
 There are a two examples files with the library. In the Arduino IDE, choose File/Examples/ThermistorNTC, and you can see "ThermistorNTC" and "ThermistorNTC_no_coefficients".
 
 <p align=center>
-<img src="img/Arduino_examples.png" alt="Examples files" width=700>
+<img src="img/Arduino_examples.png" alt="Examples files" width=600>
 </p>
 
 --- or ---
