@@ -22,6 +22,7 @@
 	],
 	"platforms": [
 	  "atmelavr",
+		"lgt8f"
 	  "teensy"
 	]
 }
