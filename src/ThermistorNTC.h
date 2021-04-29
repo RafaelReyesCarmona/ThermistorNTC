@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.h - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.2
+v0.2.1
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -25,15 +25,12 @@ rafael.reyes.carmona@gmail.com
   along with ThermistorNTC.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-/*  This block for Arduino IDE
+
 #if ARDUINO >= 100
 	#include "Arduino.h"
 #else
 	#include "WProgram.h"
 #endif
-*/
-
-#include "Arduino.h"  // This line for PlatformIO.
 
 #ifndef ThermistorNTC_h
 #define ThermistorNTC_h
