@@ -173,6 +173,8 @@ a conventional voltage divider circuit. It can used two forms of configurations.
 
 ## Installation ##
 
+### Arduino IDE ###
+
 For a tutorial on how to install new libraries for use with the Arduino
 development environment please refer to the following website:
 http://www.arduino.cc/en/Reference/Libraries
@@ -190,6 +192,39 @@ http://www.arduino.cc/en/Reference/Libraries
 </p>
 
 3. Navigate to the ZIP file, and click Open.
+
+### PlatformIO ###
+
+How to use the library in PlatformIO see [documentation](https://docs.platformio.org/en/latest/librarymanager/index.html) of Library Manager.
+
+The only one simple step is to define dependencies in “platformio.ini” (Project Configuration File). For example,
+
+```
+[env:pro16MHzatmega328]
+platform = atmelavr
+board = pro16MHzatmega328
+framework = arduino
+lib_deps = rafaelreyescarmona/ThermistorNTC
+
+[env:LGT8F328]
+board = LGT8F328P
+board_build.f_cpu = 32000000
+platform = lgt8f
+framework = arduino
+lib_deps = rafaelreyescarmona/ThermistorNTC@^0.2.1
+```
+
+--- or ---
+
+1. Search "ThermistorNTC" in search box of _Libraries_ of panel.
+<p align=center>
+<img src="img/PlatformIO_1.png" alt="PlatformIO Search screen" width=600>
+</p>
+
+2. Click _Add to project_ button. Library will be included in the project and "platformio.ini" updated.
+<p align=center>
+<img src="img/PlatformIO_2.png" alt="PlatformIO Add library" width=600>
+</p>
 
 ## How to use the library ##
 
