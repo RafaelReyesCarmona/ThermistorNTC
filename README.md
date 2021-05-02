@@ -214,6 +214,21 @@ framework = arduino
 lib_deps = rafaelreyescarmona/ThermistorNTC@^0.2.1
 ```
 
+For Manual installation in PlatformIO Core:
+
+1. Run a terminal and type for search the library: 
+```
+pio lib search ThermistorNTC
+```
+<p align=center>
+<img src="img/PlatformIO_3.png" alt="PlatformIO Search command" width=600>
+</p>
+
+2. Type for install:
+```
+pio lib install 12115
+```
+
 --- or ---
 
 1. Search "ThermistorNTC" in search box of _Libraries_ of panel.
