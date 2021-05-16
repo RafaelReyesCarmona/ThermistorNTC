@@ -147,6 +147,7 @@ you can de termine the unknowns parameters of a thermistor.
 
 For more information about NTC thermistors and Steinhart-Hart equation to calc the parameters using three pairs of values (temperature, NTC resistence) see [NTC Thermistors Steinhart and Hart Equation](https://www.ametherm.com/thermistor/ntc-thermistors-steinhart-and-hart-equation)
 
+Or [you can use this info](https://sparks.gogo.co.nz/ntc_thermistor.html) 
 ## How to use Thermistor as temperature sensor ##
 
 Thermistor values denote their resistance at 25°C. A popular type would
