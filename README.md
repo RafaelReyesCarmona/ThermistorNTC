@@ -83,6 +83,8 @@ More information:
 * [Arrhenius equation](https://en.wikipedia.org/wiki/Arrhenius_equation?wprov=sfla1).
 * [Q10 temperature coefficient](https://en.wikipedia.org/wiki/Q10_%28temperature_coefficient%29).
 
+In Adafruit pages, [using a thermistor](https://learn.adafruit.com/thermistor/using-a-thermistor), there are information about how to use thermistor as temperature sensor with examples. 
+
 ## Fast Calc ##
 
 In this library, it is take the beta ecuation and calculate temperature of the thermistor from it.
