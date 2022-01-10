@@ -8,7 +8,6 @@
 
 Thermistor	KEYWORD1
 
-
 #########################################
 # Methods and Functions (KEYWORD2)
 #########################################
@@ -23,8 +22,6 @@ fastTempKelvin	KEYWORD2
 fastTempCelsius	KEYWORD2
 fastTempFahrenheit	KEYWORD2
 setADC	KEYWORD2
-setEMA	KEYWORD2
-
 
 #########################################
 # Instances (KEYWORD2)

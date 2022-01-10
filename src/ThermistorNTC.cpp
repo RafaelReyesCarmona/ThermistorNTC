@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.cpp - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.2.1
+v0.3
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -28,6 +28,8 @@ rafael.reyes.carmona@gmail.com
 
 #include "ThermistorNTC.h"
 #include <math.h>
+#include <EMA.h>
+#include <ADC.h>
 
 // Constructor para 4 parametros (A,B,C,D).
 Thermistor::Thermistor(int PIN,
@@ -202,27 +204,38 @@ double Thermistor::fastTempFahrenheit(Thermistor_connection ConType){
 }
 
 
-float Thermistor::getADC(int numsamples){
-  float EMA_LOW;
-  int microdelay;
+uint16_t Thermistor::getADC(){
+  uint16_t ADC_filtered;
+  uint16_t pVal;
+  static EMA<3> EMA_filter(analogRead(_PIN));
 
-  microdelay = (1 <<((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0)));
-  microdelay = microdelay * 2000000 / F_CPU;
+  pVal = analogRead(_PIN);
 
-  EMA_LOW = analogRead(_PIN);
+  ADC_filtered = EMA_filter(pVal);
 
-  for (byte i = numsamples; i--; ){
-    delayMicroseconds(microdelay);
-    EMA_LOW = (_alphaEMA_LOW * (float)analogRead(_PIN)) + ((1.0 - _alphaEMA_LOW) * EMA_LOW);
+  return ADC_filtered;
   }
 
-  return EMA_LOW;
-}
+uint16_t Thermistor::getADC_LowNoise(){
+  uint8_t PORT = _PIN - A0;
+  uint16_t ADC_filtered;
+  uint16_t pVal;
 
+  ADMUX &= 0xE0;  // Clear Port setting 0 MUX0..3.
+  ADMUX |= PORT;  // Setting Port for read ADC.
+
+  static EMA<3> EMA_filter(adcGet_());  
+  pVal = adcGet_();
+  
+  ADC_filtered = EMA_filter(pVal);
+
+  return ADC_filtered;
+}
 
 double Thermistor::calcNTC(Thermistor_connection ConType){
   double NTC;
-  float ADC_VALUE = getADC();
+  //float ADC_VALUE = (float)getADC();
+  float ADC_VALUE = (float)getADC_LowNoise();
   if (ConType == VCC){
     NTC = (float)_ADC_MAX * (float)_RESISTOR;
     NTC -= ADC_VALUE * (float)_RESISTOR;
@@ -360,9 +373,4 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
 
 void Thermistor::setADC(int ADC_MAX){
   _ADC_MAX = ADC_MAX;
-}
-
-
-void Thermistor::setEMA(float EMA){
-  _alphaEMA_LOW = EMA;
 }

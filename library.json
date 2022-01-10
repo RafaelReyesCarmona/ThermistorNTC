@@ -1,6 +1,6 @@
 {
 	"name": "ThermistorNTC",
-	"version": "0.2.1",
+	"version": "0.3",
 	"keywords": "thermistor, temperature",
 	"description": "Library to used to derive a precise temperature of a thermistor, fastest Calc.",
 	"authors":
@@ -18,11 +18,16 @@
 		"url": "https://github.com/RafaelReyesCarmona/ThermistorNTC.git"
 	},
 	"frameworks": [
-	  "arduino"
+		"arduino"
 	],
 	"platforms": [
-	  "atmelavr",
+		"atmelavr",
 		"lgt8f",
-	  "teensy"
-	]
+		"teensy"
+	],
+	"dependencies":
+	{
+		"rafaelreyescarmona/EMA": "*",
+		"rafaelreyescarmona/ADC": "*"
+	}
 }

@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.ino - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.2.1
+v0.3
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.

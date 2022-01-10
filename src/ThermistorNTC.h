@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.h - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.2.1
+v0.3
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -25,12 +25,15 @@ rafael.reyes.carmona@gmail.com
   along with ThermistorNTC.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
+/*  This block for Arduino IDE
 #if ARDUINO >= 100
 	#include "Arduino.h"
 #else
 	#include "WProgram.h"
 #endif
+*/
+
+#include "Arduino.h"  // This line for PlatformIO.
 
 #ifndef ThermistorNTC_h
 #define ThermistorNTC_h
@@ -60,12 +63,11 @@ class Thermistor {
         float _BETA = 0.0;
         float _VREF;
 
-        float _alphaEMA_LOW = 0.91;
-
 				void calcCoefficients3(float, long, float, long, float, long);
 				void calcCoefficients4(float, long, float, long, float, long, float, long);
         double calcNTC(Thermistor_connection ConType = VCC);
-        float getADC(int numsamples = 15);
+        uint16_t getADC();
+        uint16_t getADC_LowNoise();
         void SteinhartHart(Thermistor_connection ConType = VCC);
         void SteinhartHart_beta(Thermistor_connection ConType = VCC);
         void SteinhartHart_fast(Thermistor_connection ConType = VCC);
@@ -83,7 +85,7 @@ class Thermistor {
         Thermistor(const Thermistor&) = delete; // Constructor de copia.
 
         void setADC(int);
-        void setEMA(float);
+        void setVref(float Vref){_VREF = Vref;};
 
         double getTempKelvin(Thermistor_connection ConType = VCC);
         double getTempCelsius(Thermistor_connection ConType = VCC);
