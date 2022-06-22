@@ -3,7 +3,7 @@
 # ThermistorNTC library #
 
 [![Library: ThermistorNTC](https://img.shields.io/badge/Library-ThermistorNTC-red?style=for-the-badge&logo=arduino)](README.md)
-[![Version: v0.3.1](https://img.shields.io/badge/Version-v0.3.1-blue?style=for-the-badge&logo=v)]()
+[![Version: v0.3.2](https://img.shields.io/badge/Version-v0.3.2-blue?style=for-the-badge&logo=v)]()
 
 Library to used to derive a precise temperature of a thermistor, fastest Calc. (14~29% faster than others)
 
@@ -424,6 +424,13 @@ You can get **A**, **B** and **D** parameters with [Thermistor Calculator V1.1](
 
 To get **A**, **B**,**C** and **D** parameters there are a utility that can help to solve the system ([Resolución de ecuaciones lineales](http://es.onlinemschool.com/math/assistance/equation/gaus/).)
 
+## Changelog ##
+### V0.3.2
+  * Change internal names of values for incompatiblity with ctypes.h library of ESP8266.
+
+### V0.3.1
+  * Added support for non AVR,s like ESP8266.
+
 ## License ##
 
 This file is part of ThermistorNTC Library.
@@ -438,7 +445,7 @@ You should have received a copy of the GNU General Public License along with The
 
 ## Authors ##
 
-Copyright © 2021 Francisco Rafael Reyes Carmona.
+Copyright © 2021-2022 Francisco Rafael Reyes Carmona.
 Contact me: rafael.reyes.carmona@gmail.com
 
 This proyect began as a fork of SteinhartHart work by [Andreas Tacke](https://github.com/fiendie/). If you want to know more about this work, visit the [Github page](https://github.com/fiendie/SteinhartHart).

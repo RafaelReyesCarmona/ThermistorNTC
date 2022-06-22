@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.h - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.3.1
+v0.3.2
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -58,10 +58,10 @@ class Thermistor {
         int _PIN;
         long _RESISTOR = 10000L;
         long _NTC_25C = 0L;
-        double _A = 0.0;
-        double _B = 0.0;
-        double _C = 0.0;
-        double _D = 0.0;
+        double _a = 0.0;
+        double _b = 0.0;
+        double _c = 0.0;
+        double _d = 0.0;
         float _BETA = 0.0;
         float _VREF;
 

@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.cpp - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.3.1
+v0.3.2
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -46,10 +46,10 @@ Thermistor::Thermistor(int PIN,
   _PIN = PIN;
   _RESISTOR = RESISTOR;
   _NTC_25C = NTC_25C;
-  _A = A;
-  _B = B;
-  _C = C;
-  _D = D;
+  _a = A;
+  _b = B;
+  _c = C;
+  _d = D;
   _VREF = VREF;
 
   pinMode(_PIN, INPUT);
@@ -66,9 +66,9 @@ Thermistor::Thermistor(int PIN,
   _PIN = PIN;
   _RESISTOR = RESISTOR;
   _NTC_25C = NTC_25C;
-  _A = A;
-  _B = B;
-  _D = D;
+  _a = A;
+  _b = B;
+  _d = D;
   _VREF = VREF;
 
   pinMode(_PIN, INPUT);
@@ -132,7 +132,7 @@ Thermistor::Thermistor(int PIN,
 
 void Thermistor::SteinhartHart(Thermistor_connection ConType){
   float E = log(calcNTC(ConType));
-  _temp_k = _A + (_B*E) + (_C*(E*E)) + (_D*(E*E*E));
+  _temp_k = _a + (_b*E) + (_b*(E*E)) + (_d*(E*E*E));
   _temp_k = 1.0 / _temp_k;
   _temp_c = _temp_k - 273.15;
 }
@@ -280,15 +280,15 @@ void Thermistor::calcCoefficients3(float T1, long RT1, float T2, long RT2, float
   double yY2 = (Y2 - Y1)/(L2 - L1);
   double yY3 = (Y3 - Y1)/(L3 - L1);
 
-  _D = (yY3 - yY2);
-  _D /= ((L3 -L2) * (L1 + L2 + L3));
-  _B = (L1 * L1) + (L1 * L2) + (L2 *L2);
-  _B *= _D;
-  _B = yY2 - _B;
-  _A = _D * L1 * L1;
-  _A += _B;
-  _A *= L1;
-  _A = Y1 - _A;
+  _d = (yY3 - yY2);
+  _d /= ((L3 -L2) * (L1 + L2 + L3));
+  _b = (L1 * L1) + (L1 * L2) + (L2 *L2);
+  _b *= _d;
+  _b = yY2 - _b;
+  _a = _d * L1 * L1;
+  _a += _b;
+  _a *= L1;
+  _a = Y1 - _b;
 }
 
 
@@ -364,16 +364,16 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
   double DC = (DY1 * DS1_2) - (DY2 * DS2_2);
   double DD = (DY2 * DS1_1) - (DY1 * DS2_1);
 
-  _D = DD / DS;
-  _C = DC / DS;
+  _d = DD / DS;
+  _c = DC / DS;
 
-  double Z1 = Y1 - (_C * L1_2) - (_D * L1_3);
-  double Z2 = Y2 - (_C * L2_2) - (_D * L2_3);
+  double Z1 = Y1 - (_C * L1_2) - (_d * L1_3);
+  double Z2 = Y2 - (_C * L2_2) - (_d * L2_3);
 
-  _A = (Z1 * L2) - (Z2 * L1);
-  _A /= L2_L1;
-  _B = Z2 - Z1;
-  _B /= L2_L1;
+  _a = (Z1 * L2) - (Z2 * L1);
+  _a /= L2_L1;
+  _b = Z2 - Z1;
+  _b /= L2_L1;
 //  */
 }
 
