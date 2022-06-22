@@ -1,7 +1,7 @@
 /*
 ThermistorNTC_no_coefficients.ino - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.3
+v0.3.1
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.

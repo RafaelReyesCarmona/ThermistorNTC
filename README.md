@@ -3,7 +3,7 @@
 # ThermistorNTC library #
 
 [![Library: ThermistorNTC](https://img.shields.io/badge/Library-ThermistorNTC-red?style=for-the-badge&logo=arduino)](README.md)
-[![Version: v0.3](https://img.shields.io/badge/Version-v0.3-blue?style=for-the-badge&logo=v)]()
+[![Version: v0.3.1](https://img.shields.io/badge/Version-v0.3.1-blue?style=for-the-badge&logo=v)]()
 
 Library to used to derive a precise temperature of a thermistor, fastest Calc. (14~29% faster than others)
 

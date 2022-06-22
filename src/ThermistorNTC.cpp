@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.cpp - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.3
+v0.3.1
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -29,7 +29,10 @@ rafael.reyes.carmona@gmail.com
 #include "ThermistorNTC.h"
 #include <math.h>
 #include <EMA.h>
+#if defined(__AVR__)
 #include <ADC.h>
+#endif
+namespace ThermistorNTC {
 
 // Constructor para 4 parametros (A,B,C,D).
 Thermistor::Thermistor(int PIN,
@@ -203,19 +206,7 @@ double Thermistor::fastTempFahrenheit(Thermistor_connection ConType){
   return fastTempCelsius(ConType) * 9/5 + 32;
 }
 
-
-uint16_t Thermistor::getADC(){
-  uint16_t ADC_filtered;
-  uint16_t pVal;
-  static EMA<3> EMA_filter(analogRead(_PIN));
-
-  pVal = analogRead(_PIN);
-
-  ADC_filtered = EMA_filter(pVal);
-
-  return ADC_filtered;
-  }
-
+#if defined(__AVR__)
 uint16_t Thermistor::getADC_LowNoise(){
   uint8_t PORT = _PIN - A0;
   uint16_t ADC_filtered;
@@ -231,11 +222,27 @@ uint16_t Thermistor::getADC_LowNoise(){
 
   return ADC_filtered;
 }
+#else
+uint16_t Thermistor::getADC(){
+  uint16_t ADC_filtered;
+  uint16_t pVal;
+  static EMA<3> EMA_filter(analogRead(_PIN));
+
+  pVal = analogRead(_PIN);
+
+  ADC_filtered = EMA_filter(pVal);
+
+  return ADC_filtered;
+  }
+#endif
 
 double Thermistor::calcNTC(Thermistor_connection ConType){
   double NTC;
-  //float ADC_VALUE = (float)getADC();
+  #if defined(__AVR__)
   float ADC_VALUE = (float)getADC_LowNoise();
+  #else
+  float ADC_VALUE = (float)getADC();
+  #endif
   if (ConType == VCC){
     NTC = (float)_ADC_MAX * (float)_RESISTOR;
     NTC -= ADC_VALUE * (float)_RESISTOR;
@@ -373,4 +380,6 @@ void Thermistor::calcCoefficients4(float T1, long RT1, float T2, long RT2, float
 
 void Thermistor::setADC(int ADC_MAX){
   _ADC_MAX = ADC_MAX;
+}
+
 }

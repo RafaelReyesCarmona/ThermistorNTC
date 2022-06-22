@@ -1,6 +1,6 @@
 {
 	"name": "ThermistorNTC",
-	"version": "0.3",
+	"version": "0.3.1",
 	"keywords": "thermistor, temperature",
 	"description": "Library to used to derive a precise temperature of a thermistor, fastest Calc.",
 	"authors":

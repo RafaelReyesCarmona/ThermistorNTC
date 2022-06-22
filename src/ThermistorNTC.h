@@ -1,7 +1,7 @@
 /*
 ThermistorNTC.h - Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
-v0.3
+v0.3.1
 
 Copyright © 2021 Francisco Rafael Reyes Carmona.
 All rights reserved.
@@ -38,6 +38,8 @@ rafael.reyes.carmona@gmail.com
 #ifndef ThermistorNTC_h
 #define ThermistorNTC_h
 
+namespace ThermistorNTC {
+
 enum Thermistor_connection {
   VCC,
   GND
@@ -66,8 +68,11 @@ class Thermistor {
 				void calcCoefficients3(float, long, float, long, float, long);
 				void calcCoefficients4(float, long, float, long, float, long, float, long);
         double calcNTC(Thermistor_connection ConType = VCC);
-        uint16_t getADC();
+        #if defined(__AVR__)
         uint16_t getADC_LowNoise();
+        #else
+        uint16_t getADC();
+        #endif
         void SteinhartHart(Thermistor_connection ConType = VCC);
         void SteinhartHart_beta(Thermistor_connection ConType = VCC);
         void SteinhartHart_fast(Thermistor_connection ConType = VCC);
@@ -99,5 +104,7 @@ class Thermistor {
 				double getTempCelsius_SteinHart(Thermistor_connection ConType = VCC);
 				double getTempFahrenheit_SteinHart(Thermistor_connection ConType = VCC);
 };
+
+}
 
 #endif

@@ -1,5 +1,5 @@
 /*
-ThermistorNTC.ino - Library to used to derive a precise temperature of a thermistor,
+ThermistorNTC_ESP8266.ino - Example file for Library to used to derive a precise temperature of a thermistor,
 fastest Calc (26~18% faster)
 v0.3.1
 
@@ -39,13 +39,17 @@ Thermistor thermistor0(/* PIN */       A0,
                       /* B */         2569850e-10,
                       /* C */         2620131e-12,
                       /* D */         6383091e-14,
-                      /* Vref */      5.03);
+                      /* Vref */      3.30);
 
-Thermistor thermistor1(/* PIN */       A1,
-                      /* RESISTOR */  21900L,
-                      /* NTC 25ºC */  9950L,
-                      /* BETA */      4190.0,
-                      /* Vref */      5.03);
+//****************************************************
+// Example with beta parameter.
+//
+//Thermistor thermistor0(/* PIN */       A0,
+//                      /* RESISTOR */  21900L,
+//                      /* NTC 25ºC */  9950L,
+//                      /* BETA */      4190.0,
+//                      /* Vref */      3.30);
+//****************************************************
 
 void setup(void)
 {
@@ -59,13 +63,9 @@ void loop(void)
   Serial.print("Sensor0 calc. Temp(ºC): ");
   Serial.println(sensor0);
 
-  double sensor1 = thermistor1.getTempCelsius();
-  Serial.print("Sensor1 calc. Temp(ºC): ");
-  Serial.println(sensor1);
-
-  double sensor1_fast = thermistor1.fastTempCelsius();
-  Serial.print("Sensor1_fast calc. Temp(ºC): ");
-  Serial.println(sensor1_fast);
+  double sensor0_fast = thermistor0.fastTempCelsius();
+  Serial.print("Sensor0_fast calc. Temp(ºC): ");
+  Serial.println(sensor0_fast);
 
   delay(1000);
 }
